@@ -84,15 +84,52 @@ stratify: True
 # Feature Selection
 # *****************************
 
-# can be "rfe" or "all" or "manual"
+# can be "rfe", "tree" or "all" or "manual"
 # if "manual" then specify the features in the list below
+# if "rfe" or "tree" then specify the model parameters below
 feature_selection: "all"
 manual_features: []
 
+# for RFE
 fs_model_params:
   n_estimators: 100
   max_depth: 6
   max_features: 20
   random_state: 42
 
+# fs_model_params:
+#   n_estimators: 100
+#   max_depth: 6
+#   max_features: 20
+#   random_state: 42
+#   criterion: "gini"
+#   splitter: "best"
+#   min_samples_split: 2
+#   min_samples_leaf: 1
+#   random_state: 42
+#   max_leaf_nodes: None
+#   class_weight: None
+
 n_features: 12
+
+
+# *****************************
+# Model Selection
+# *****************************
+
+n_trials: 1 
+
+
+# *****************************
+# Explainability
+# *****************************
+
+# todo...
+
+# *****************************
+# Data Drift
+# *****************************
+
+# adding here because Kedro does not support "html" datasets
+data_drift_output_path: "data/dev/09_reporting/data_drift_analysis.html"
+

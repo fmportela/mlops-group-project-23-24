@@ -8,7 +8,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=split_data,
                 inputs=dict(
-                    df="stateless_data",
+                    df="featurized_data",
                     target_label="params:target_label",
                     set_sizes="params:set_sizes",
                     stratify="params:stratify",

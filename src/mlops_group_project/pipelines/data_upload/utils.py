@@ -95,7 +95,7 @@ def to_feature_store(
     object_feature_group = feature_store.get_or_create_feature_group(
         name=group_name,
         version=feature_group_version,
-        description= description,
+        description=description,
         primary_key=["encounter_id"],  # keep inside list!!!
         event_time="datetime",  # added this new feature in nodes.py
         online_enabled=False,
@@ -127,4 +127,3 @@ def to_feature_store(
     }
     object_feature_group.update_statistics_config()
     object_feature_group.compute_statistics()
-    

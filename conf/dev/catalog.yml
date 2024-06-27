@@ -30,32 +30,41 @@ stateless_data:
 
 
 # *********************
+# Feat. Engineering
+# *********************
+
+featurized_data:
+  type: pandas.CSVDataset
+  filepath: "data/dev/04_featurized/featurized_data.csv"
+
+
+# *********************
 # Data Split
 # *********************
 
-X_train_stateless:
+X_train:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/X_train_stateless.csv"
+  filepath: "data/dev/05_split/X_train_stateless.csv"
 
-X_val_stateless:
+X_val:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/X_val_stateless:.csv"
+  filepath: "data/dev/05_split/X_val_stateless:.csv"
 
-X_test_stateless:
+X_test:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/X_test_stateless:.csv"
+  filepath: "data/dev/05_split/X_test_stateless:.csv"
 
 y_train:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/y_train.csv"
+  filepath: "data/dev/05_split/y_train.csv"
 
 y_val:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/y_val.csv"
+  filepath: "data/dev/05_split/y_val.csv"
 
 y_test:
   type: pandas.CSVDataset
-  filepath: "data/dev/04_split/y_test.csv"
+  filepath: "data/dev/05_split/y_test.csv"
 
 
 # *********************
@@ -64,39 +73,22 @@ y_test:
 
 X_train_stateful:
   type: pandas.CSVDataset
-  filepath: "data/dev/05_stateful/X_train_stateful.csv"
+  filepath: "data/dev/06_stateful/X_train_stateful.csv"
 
 X_val_stateful:
   type: pandas.CSVDataset
-  filepath: "data/dev/05_stateful/X_val_stateful.csv"
+  filepath: "data/dev/06_stateful/X_val_stateful.csv"
 
 X_test_stateful:
   type: pandas.CSVDataset
-  filepath: "data/dev/05_stateful/X_test_stateful.csv"
+  filepath: "data/dev/06_stateful/X_test_stateful.csv"
 
 imputer:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
     type: kedro_mlflow.io.models.MlflowModelLocalFileSystemDataset
     flavor: mlflow.sklearn
-    filepath: "data/dev/05_stateful/imputer"
-
-
-# *********************
-# Feat. Engineering
-# *********************
-
-X_train_featurized:
-  type: pandas.CSVDataset
-  filepath: "data/dev/06_feature/X_train_featurized.csv"
-
-X_val_featurized:
-  type: pandas.CSVDataset
-  filepath: "data/dev/06_feature/X_val_featurized.csv"
-
-X_test_featurized:
-  type: pandas.CSVDataset
-  filepath: "data/dev/06_feature/X_test_featurized.csv"
+    filepath: "data/dev/06_stateful/imputer"
 
 
 # *********************
@@ -120,9 +112,9 @@ X_test_selected:
   filepath: "data/dev/07_model_input/X_test_selected.csv"
 
 
-# ******************************
-# Model Selection Catalog
-# ******************************
+# *********************
+# Model Selection
+# *********************
 
 # MlflowModelTrackingDataset: to load and save the model from the mlflow artifact store.
 # MlflowModelLocalFileSystemDataset: to load and save the model from the local file system.
@@ -135,4 +127,37 @@ champion_model:
     type: kedro_mlflow.io.models.MlflowModelLocalFileSystemDataset
     flavor: mlflow.sklearn
     filepath: "data/dev/08_models/champion_model"
-  versioned: true
+    versioned: true
+
+
+
+# *********************
+# Aggreated Data
+# *********************
+
+concatenated_processed_data:
+  type: pandas.CSVDataset
+  filepath: "data/dev/09_reporting/concatenated_processed_data.csv"
+
+
+# *********************
+# Explainability
+# *********************
+
+permutation_importance:
+  type: pandas.CSVDataset
+  filepath: "data/dev/09_reporting/permutation_importance.csv"
+
+
+# *********************
+# Data Drift
+# *********************
+
+# check the create_example_reference_data.py file to see how it was created!
+reference_data:
+  type: pandas.CSVDataset
+  filepath: "data/reference/reference_data.csv"
+
+# in html format for now...
+
+

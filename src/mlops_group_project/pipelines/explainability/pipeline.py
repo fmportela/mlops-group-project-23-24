@@ -1,10 +1,12 @@
-"""
-This is a boilerplate pipeline 'explainability'
-generated using Kedro 0.19.4
-"""
-
-from kedro.pipeline import Pipeline, pipeline
+from kedro.pipeline import Pipeline, pipeline, node
+from .nodes import calculate_permutation_importance
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    return pipeline([])
+    return pipeline([
+        node(
+            func=calculate_permutation_importance,
+            inputs=["champion_model", "concatenated_processed_data"],
+            outputs="permutation_importance"
+        )
+    ])

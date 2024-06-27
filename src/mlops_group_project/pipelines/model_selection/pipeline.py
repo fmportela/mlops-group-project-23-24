@@ -14,7 +14,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                     X_test="X_test_selected",
                     y_test="y_test",
                     n_trials="params:n_trials",
-                    champion_model="champion_model",
                 ),
                 outputs="champion_model",
                 name= "model_selection_node"

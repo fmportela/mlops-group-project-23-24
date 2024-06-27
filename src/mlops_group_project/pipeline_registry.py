@@ -1,6 +1,6 @@
 from typing import Dict
 
-from kedro.pipeline import pipeline, Pipeline
+from kedro.pipeline import Pipeline
 from .pipelines import (
     data_upload,
     data_ingestion,
@@ -10,6 +10,9 @@ from .pipelines import (
     feature_engineering,
     feature_selection,
     model_selection,
+    concatenate_data,
+    explainability,
+    data_drift
 )
 
 
@@ -36,18 +39,38 @@ def register_pipelines() -> Dict[str, Pipeline]:
     feature_engineering_pipeline = feature_engineering.create_pipeline()
     feature_selection_pipeline = feature_selection.create_pipeline()
     model_selection_pipeline = model_selection.create_pipeline()
+    concatenate_data_pipeline = concatenate_data.create_pipeline()
+    explainability_pipeline = explainability.create_pipeline()
+    data_drift_pipeline = data_drift.create_pipeline()
     
     
     return {
+        # individual pipelines for debugging
+        "data_ingestion": data_ingestion_pipeline,
+        "stateless_cleaning": stateless_cleaning_pipeline,
+        "data_split": data_split_pipeline,
+        "stateful_cleaning": stateful_cleaning_pipeline,
+        "feature_engineering": feature_engineering_pipeline,
+        "feature_selection": feature_selection_pipeline,
+        "model_selection": model_selection_pipeline,
+        "concatenate_data": concatenate_data_pipeline,
+        "explainability": explainability_pipeline,
+        "data_drift": data_drift_pipeline,
+        
+        
+        # main pipelines
         "data_upload": data_upload_pipeline,  # env. dependent
         
         "dev": data_ingestion_pipeline +\
             stateless_cleaning_pipeline +\
-                data_split_pipeline +\
-                    stateful_cleaning_pipeline +\
-                        feature_engineering_pipeline +\
+                feature_engineering_pipeline +\
+                    data_split_pipeline +\
+                        stateful_cleaning_pipeline +\
                             feature_selection_pipeline +\
-                                model_selection_pipeline,
+                                model_selection_pipeline +\
+                                    concatenate_data_pipeline +\
+                                        explainability_pipeline +\
+                                            data_drift_pipeline,
                    
         "prod": data_ingestion_pipeline +\
             stateless_cleaning_pipeline,

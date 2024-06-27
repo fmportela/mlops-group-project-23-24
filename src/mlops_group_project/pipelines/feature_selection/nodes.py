@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.feature_selection import RFE
 
 import mlflow
@@ -27,7 +28,7 @@ def select_features(
     Args:
         X_train (pd.DataFrame): Training data.
         y_train (pd.Series): Training labels.
-        feature_selection (str): Method for feature selection. Can be "rfe", "all", "manual".
+        feature_selection (str): Method for feature selection. Can be "rfe", "tree", "all", "manual".
         model_params (Dict[str, Any]): Parameters for the RF Classifier. Can be None if "all" or "manual".
         n_features (int): Number of features to select. Can be None if "all" or "manual".
         manual_features (list): List of manual features to use, only applicable if "manual".
@@ -45,6 +46,13 @@ def select_features(
             rfe = rfe.fit(X_train, np.ravel(y_train))
             most_important_features = rfe.get_support(1)
             X_cols = X_train.columns[most_important_features].tolist()
+        
+        elif feature_selection == "tree":
+            tree = DecisionTreeClassifier(**model_params)
+            tree.fit(X_train, y_train)
+            importances = tree.feature_importances_
+            indices = np.argsort(importances)[::-1]
+            X_cols = X_train.columns[indices[:n_features]].tolist()
         
         elif feature_selection == "all":
             X_cols = X_train.columns.tolist()

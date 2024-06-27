@@ -7,7 +7,7 @@ def create_pipeline(**kwargs):
             node(
                 select_features,
                 inputs=dict(
-                    X_train="X_train_featurized",
+                    X_train="X_train_stateful",
                     y_train="y_train",
                     feature_selection="params:feature_selection",
                     model_params="params:fs_model_params",
@@ -19,19 +19,19 @@ def create_pipeline(**kwargs):
             ),
             node(
                 filter_dataset,
-                inputs=["X_train_featurized", "selected_features"],
+                inputs=["X_train_stateful", "selected_features"],
                 outputs="X_train_selected",
                 name="X_train_selected_node",
             ),
             node(
                 filter_dataset,
-                inputs=["X_val_featurized", "selected_features"],
+                inputs=["X_val_stateful", "selected_features"],
                 outputs="X_val_selected",
                 name="X_val_selected_node",
             ),
             node(
                 filter_dataset,
-                inputs=["X_test_featurized", "selected_features"],
+                inputs=["X_test_stateful", "selected_features"],
                 outputs="X_test_selected",
                 name="X_test_selected_node",
             ),

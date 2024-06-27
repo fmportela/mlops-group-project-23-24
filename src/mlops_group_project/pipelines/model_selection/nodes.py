@@ -1,10 +1,11 @@
-from typing import Tuple
+from typing import Tuple, Union
 import warnings; warnings.filterwarnings('ignore')
 
 import pandas as pd
 import numpy as np
 
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, f1_score
 from sklearn.base import BaseEstimator
 
@@ -12,7 +13,13 @@ import optuna
 import mlflow
 from mlflow.tracking import MlflowClient
 
-# from mlops_project.pipelines.utils import load_registered_model_version  # import error fix this
+
+# NOTE: to avoid changing the champion model randomly during dev runs (champion model is our prod model)
+# our approach is to store promosiing models as "challengers". Which after further testing (e.g. shadow testing)
+# can indeed be manually promoted to champion. This is a common practice in ML engineering.
+
+
+# TODO add random state
 
 
 # should this also go into a 'utils'-like module?
@@ -26,6 +33,11 @@ MODELS_DICT = {
         'model': GradientBoostingClassifier(),
         'tune': True
     },
+    
+    'LogisticRegression': {
+        'model': LogisticRegression(),
+        'tune': True
+    },
 }
 
 
@@ -33,7 +45,6 @@ def register_model(
     model_path: str,
     model_name: str,
     model_tag: str = None,
-    model_version: int = None,
     model_alias: str = None
 ) -> None:
     """
@@ -46,89 +57,41 @@ def register_model(
         model_version (int): The version of the model to register.
         model_alias (str): An alias to add to the model.
     """
-    mlflow.register_model(
+    
+    client = MlflowClient()
+    
+    # registering model
+    version = mlflow.register_model(
         model_path, model_name
     )
     
-    if any(var is not None for var in [model_tag, model_version, model_alias]):
-        client = MlflowClient()
+    if any(var is not None for var in [model_tag, model_alias]):
     
         if model_tag:
             client.set_registered_model_tag(
                 model_name, "task", "classification"
             )
         
-        if model_version:
-            client.set_model_version_tag(
-                model_name, str(model_version), "validation_status", "approved"
-            )
-        
+        # creating/reassigning alias
         if model_alias:
             client.set_registered_model_alias(
-                model_name, model_alias, str(model_version)
+                model_name, model_alias, version.version
             )
-
-
-def delete_registered_model(model_name: str) -> None:
-    """
-    Delete a model from the MLflow Model Registry. If 'all' is
-    passed as the model_name, all registered models will be deleted.
-    
-    Args:
-        model_name (str): The name of the model to delete.
-    """
-    
-    client = MlflowClient()
-    
-    if model_name == "all":
-        # get names of registered models
-        registered_models = client.list_registered_models()
-        
-        # delete all registered models
-        for model in registered_models:
-            client.delete_registered_model(name=model.name)
-    
-    else:
-        client.delete_registered_model(name=model_name)
-
-
-def update_model_alias(model_name: str, new_alias: str) -> None:
-    """
-    Update the alias of a model in the MLflow Model Registry. If 'all' is
-    passed as the model_name, all registered models' aliases will be updated.
-    
-    Args:
-        model_name (str): The name of the model to update.
-        new_alias (str): The new alias to set for the model.
-    """
-    
-    client = MlflowClient()
-    
-    if model_name == "all":
-        # Get names of registered models
-        registered_models = client.list_registered_models()
-        
-        # Update alias for all registered models
-        for model in registered_models:
-            client.set_registered_model_alias(name=model.name, alias=new_alias)
-    
-    else:
-        client.set_registered_model_alias(name=model_name, alias=new_alias)
-
 
 
 # NOTE: if true champion model is stored locally then this probably won't be necessary
-def load_registered_model_version(model_name: str, version: int):
+def load_registered_model_version(model_name: str, version: int = -1) -> Union[BaseEstimator, None]:
     """
     Load a specific version of a registered model from the
     MLflow Model Registry. If version is -1, load the latest version.
+    Useful: https://mlflow.org/docs/latest/model-registry.html    
     
     Args:
         model_name (str): The name of the registered model.
         version (int): The version of the model to load, or -1 for the latest version.
     
     Returns:
-        model: The loaded model.
+        model: The loaded model. Or None if there is no matching model.
     """
     client = MlflowClient()
 
@@ -146,6 +109,25 @@ def load_registered_model_version(model_name: str, version: int):
         return model
     except Exception as e:
         raise Exception(f"Could not load model from Registry: {e}")
+    
+    
+def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]:
+    """
+    Locate the champion model in the MLflow Model Registry.
+    
+    Returns:
+        model: The champion model. Or None if there is no champion model.
+    """
+    client = MlflowClient()
+    
+    models = client.search_registered_models()
+    for model in models:
+        for alias in model.aliases.keys():
+            if alias == "champion":
+                return load_registered_model_version(model.name, model.aliases[alias])
+    
+    return None
+
 
 
 def optuna_objective(
@@ -182,6 +164,17 @@ def optuna_objective(
             learning_rate=learning_rate,
             max_depth=max_depth
         )
+        
+    elif model_name == 'LogisticRegression':
+        penalty = trial.suggest_categorical('penalty', ['l1', 'l2'])
+        C = trial.suggest_loguniform('C', 0.01, 10)
+        solver = 'liblinear' if penalty == 'l1' else 'lbfgs'
+        
+        model.set_params(
+            penalty=penalty,
+            C=C,
+            solver=solver
+        )
     
     else:
         raise ValueError(f"Model {model_name} not found in MODELS_DICT")
@@ -201,7 +194,6 @@ def select_model(
     X_test: pd.DataFrame,
     y_test: pd.Series,
     n_trials: int = 50,
-    champion_model: BaseEstimator = None,
     models: dict = MODELS_DICT
 ) -> BaseEstimator:
     
@@ -262,33 +254,43 @@ def select_model(
                 mlflow.log_metric("testing_recall_1", test_report["1"]["recall"])
                 mlflow.log_metric("testing_f1_score_1", test_report["1"]["f1-score"])
                 mlflow.log_metric("testing_accuracy", test_report["accuracy"])
+                
+                print(f"Model: {model_name}")
+                print(f"Training F1-score: {train_report['1']['f1-score']}")
+                print(f"Testing F1-score: {test_report['1']['f1-score']}")
+                print(f"Overfitting: {overfitting}")
         
         # if models show great overfitting then we don't register any model
         if best_model is not None:
+            
+            print(f"Best model: {best_model_name}")
+                       
+            # loading the champion model
+            champion_model = locate_champion_model()
+            
             # comparing challenger to champion
             if champion_model is not None:
                 # check this out: https://mlflow.org/docs/latest/model-registry.html
-                
-                
                 champion_test_pred = champion_model.predict(X_test)
                 champion_f1 = f1_score(np.ravel(y_test), champion_test_pred, pos_label=1)
-                if best_score > champion_f1:
-                    # update the alias of the champion model to "old_champion"
-                    update_model_alias("champion", "old_champion")  #FIX THIS               
+                
+                print(f"Champion model F1-score: {champion_f1}")
+                
+                # update the alias of the champion model to "old_champion"
+                if best_score >= champion_f1:            
                     
-                    # register the best model as the new champion
+                    # register the best model as the a promising challenger
                     register_model(
                         f"runs:/{best_run_id}/model",
                         best_model_name,
-                        model_version=1,  # if v1 is already registered, new version will be created
-                        model_alias="champion"
+                        model_alias="challenger"
                     )
             else:
-                # if there is not champion model we register the best model
+                # if there is no champion model we register the best model as the champion
+                # (this will only be triggered in the 1st run ever - long before an actual model is put into production)
                 register_model(
                     f"runs:/{best_run_id}/model",
                     best_model_name,
-                    model_version=1,  # if v1 is already registered, new version will be created
                     model_alias="champion"
                 )
             
@@ -300,20 +302,14 @@ if __name__ == '__main__':
     import os
 
     params = {
-        'X_train': pd.read_csv(os.path.join('data', '06_model_input', 'X_train_selected.csv')),
-        'y_train': pd.read_csv(os.path.join('data', '04_clean', 'y_train_cleaned.csv')),
-        'X_val': pd.read_csv(os.path.join('data', '06_model_input', 'X_val_selected.csv')),
-        'y_val': pd.read_csv(os.path.join('data', '04_clean', 'y_val_cleaned.csv')),
-        'X_test': pd.read_csv(os.path.join('data', '06_model_input', 'X_test_selected.csv')),
-        'y_test': pd.read_csv(os.path.join('data', '04_clean', 'y_test_cleaned.csv')),
+        'X_train': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_train_selected.csv')),
+        'y_train': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_train.csv')),
+        'X_val': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_val_selected.csv')),
+        'y_val': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_val.csv')),
+        'X_test': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_test_selected.csv')),
+        'y_test': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_test.csv')),
         'n_trials': 1,
-        'champion_model': None,
         'models': MODELS_DICT
     }
     
     select_model(**params)
-    
-    # i think the weird error im getting is because when i start a pipeline run
-    # kedro tracks the pipeline run id and then when i start a nested run
-    # i get that an active run is already in place, i.e. at the same time
-    # kedro is tracking model_selection pipeline and the experiment
