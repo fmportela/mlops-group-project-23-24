@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/365476756140800622/2970b1dfc5694978b8cd907e7e354e7b/artifacts
+end_time: 1719451477980
+entry_point_name: ''
+experiment_id: '365476756140800622'
+lifecycle_stage: active
+run_id: 2970b1dfc5694978b8cd907e7e354e7b
+run_name: missing_value_imputation
+run_uuid: 2970b1dfc5694978b8cd907e7e354e7b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719451477470
+status: 3
+tags: []
+user_id: fmppo

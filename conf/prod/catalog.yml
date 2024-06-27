@@ -1,0 +1,29 @@
+# ******************************
+# Data Upload Catalog
+# ******************************
+
+raw_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/01_raw/example_prod_data.csv"
+  load_args:
+    sep: ','
+  
+
+# ******************************
+# Data Ingestion Catalog
+# ******************************
+
+valid_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/02_valid/valid_data.csv"
+  load_args:
+    sep: ','
+
+
+# *********************
+# Stateless Cleaning
+# *********************
+
+clean_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/03_stateless/clean_data.csv"

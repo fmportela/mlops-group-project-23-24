@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/840079456445125848/cfc11254d8b2414a85d5789b3aac0e71/artifacts
+end_time: 1719443695812
+entry_point_name: ''
+experiment_id: '840079456445125848'
+lifecycle_stage: active
+run_id: cfc11254d8b2414a85d5789b3aac0e71
+run_name: prod
+run_uuid: cfc11254d8b2414a85d5789b3aac0e71
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719443686332
+status: 3
+tags: []
+user_id: fmppo

@@ -1,11 +1,10 @@
-<<<<<<< HEAD
-# mlops-group-project
+# MLOps Group Project
 
 ## Overview
 
-This is your new Kedro project with Kedro-Viz setup, which was generated using `kedro 0.19.4`.
+Kedro project with Kedro-Viz and Kedro-MlFlow setup, which was generated using `kedro 0.19.4`.
 
-Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
+Take a look at the [Kedro documentation](https://docs.kedro.org).
 
 ## Rules and guidelines
 
@@ -98,6 +97,3 @@ To automatically strip out all output cell contents before committing to `git`, 
 ## Package your Kedro project
 
 [Further information about building project documentation and packaging your project](https://docs.kedro.org/en/stable/tutorial/package_a_project.html).
-=======
-# mlops-group-project-23-24
->>>>>>> origin/main
