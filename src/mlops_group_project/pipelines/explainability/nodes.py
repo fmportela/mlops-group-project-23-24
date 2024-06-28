@@ -1,3 +1,4 @@
+import logging
 import warnings; warnings.filterwarnings('ignore')
 
 import pandas as pd
@@ -8,6 +9,8 @@ from sklearn.inspection import permutation_importance
 
 import mlflow
 
+
+log = logging.getLogger(__name__)
 
 def calculate_permutation_importance(
     model: BaseEstimator, 
@@ -53,6 +56,7 @@ def calculate_permutation_importance(
             'n_repeats': n_repeats,
             'random_state': random_state
         })
-            
     
+    log.info(f"Most important features calculated: {importance_df.head(5)}")
+            
     return importance_df

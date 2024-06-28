@@ -15,7 +15,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     y_test="y_test",
                     n_trials="params:n_trials",
                 ),
-                outputs="champion_model",
+                outputs="best_model_of_the_run",
                 name= "model_selection_node"
             )
         ]

@@ -70,7 +70,7 @@ stateful_data:
 # Feature Pruning
 # *********************
 
-selected_features: 
+selected_features:
   type: pickle.PickleDataset
   filepath: "data/dev/07_model_input/selected_features.pkl"  # from dev
 

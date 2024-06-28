@@ -1,3 +1,5 @@
+import logging
+
 import pandas as pd
 
 from sklearn.impute import SimpleImputer
@@ -9,6 +11,8 @@ import mlflow
 # and then apply a column transformer. with the most frequent for categorical and median for numerical
 
 # TODO log stuff to mlflow
+
+log = logging.getLogger(__name__)
 
 def impute_missing_values(
     X_train: pd.DataFrame,
@@ -40,6 +44,8 @@ def impute_missing_values(
         X_test_imputed = pd.DataFrame(X_test_imputed, columns=X_test.columns)
         
         mlflow.sklearn.log_model(imputer, "imputer_model")
+    
+    log.info("Missing values imputed.")
     
     return X_train_imputed, X_val_imputed, X_test_imputed, imputer
 

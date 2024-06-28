@@ -1,7 +1,12 @@
+import logging
+
 import pandas as pd
 
 
 # NOTE: since feat. eng. is done before imputation we ought to be able to handle NaNs
+
+
+log = logging.getLogger(__name__)
 
 
 def total_visits_in_previous_year(df: pd.DataFrame) -> pd.DataFrame:
@@ -138,5 +143,7 @@ def add_features(df: pd.DataFrame) -> pd.DataFrame:
 
     for func in fe_functions:
         df = func(df)
+    
+    log.info(f"Added features to the dataframe: {df.shape}")
 
     return df

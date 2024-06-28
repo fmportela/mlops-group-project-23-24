@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Dict, Union
 
 import pandas as pd
@@ -10,6 +11,8 @@ from sklearn.feature_selection import RFE
 import mlflow
 
 # TODO log more stuff
+
+log = logging.getLogger(__name__)
 
 def select_features(
     X_train: pd.DataFrame,
@@ -94,5 +97,8 @@ def filter_dataset(df: pd.DataFrame, features: list) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Filtered data.
     """
+    
+    log.info(f"Selected features: {features}")
+    
     return df[features]
 

@@ -1,3 +1,4 @@
+import logging
 from typing import Tuple, Union
 import warnings; warnings.filterwarnings('ignore')
 
@@ -12,6 +13,9 @@ from sklearn.base import BaseEstimator
 import optuna
 import mlflow
 from mlflow.tracking import MlflowClient
+
+
+log = logging.getLogger(__name__)
 
 
 # NOTE: to avoid changing the champion model randomly during dev runs (champion model is our prod model)
@@ -255,15 +259,15 @@ def select_model(
                 mlflow.log_metric("testing_f1_score_1", test_report["1"]["f1-score"])
                 mlflow.log_metric("testing_accuracy", test_report["accuracy"])
                 
-                print(f"Model: {model_name}")
-                print(f"Training F1-score: {train_report['1']['f1-score']}")
-                print(f"Testing F1-score: {test_report['1']['f1-score']}")
-                print(f"Overfitting: {overfitting}")
+                log.info(f"Model: {model_name}")
+                log.info(f"Training F1-score: {train_report['1']['f1-score']}")
+                log.info(f"Testing F1-score: {test_report['1']['f1-score']}")
+                log.info(f"Overfitting: {overfitting}")
         
         # if models show great overfitting then we don't register any model
         if best_model is not None:
             
-            print(f"Best model: {best_model_name}")
+            log.info(f"Best model: {best_model_name}")
                        
             # loading the champion model
             champion_model = locate_champion_model()
@@ -276,9 +280,7 @@ def select_model(
                 
                 print(f"Champion model F1-score: {champion_f1}")
                 
-                # update the alias of the champion model to "old_champion"
-                if best_score >= champion_f1:            
-                    
+                if best_score >= champion_f1:
                     # register the best model as the a promising challenger
                     register_model(
                         f"runs:/{best_run_id}/model",
@@ -293,7 +295,7 @@ def select_model(
                     best_model_name,
                     model_alias="champion"
                 )
-            
+         
     return best_model
 
 

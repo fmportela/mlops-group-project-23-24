@@ -1,11 +1,13 @@
+import logging
 from typing import List
 from datetime import datetime
 import warnings; warnings.filterwarnings("ignore")
 
 import pandas as pd
-
 from .utils import to_feature_store, read_credentials, load_expectation_suite
 
+
+log = logging.getLogger(__name__)
 
 def upload_data(df: pd.DataFrame,
                 group_name: str,
@@ -40,3 +42,5 @@ def upload_data(df: pd.DataFrame,
         validation_expectation_suite=suite,
         SETTINGS=settings_store
     )
+    
+    log.info(f"Data uploaded to feature store: {group_name} | Shape: {df.shape}")

@@ -1,6 +1,9 @@
+import logging
 import pandas as pd
 import numpy as np
 
+
+log = logging.getLogger(__name__)
 
 # NOTE: given that hopsworks lowercases the names of the columns, after ingestion those same
 # columns remain with their names in lowercase. Therefore, some columns like A1Cresult and diabetesMed
@@ -177,6 +180,7 @@ def clean_df(X: pd.DataFrame) -> pd.DataFrame:
 
     for func in cleaning_functions:
         X = func(X)
-
+    
+    log.info("Data cleaned")
 
     return X

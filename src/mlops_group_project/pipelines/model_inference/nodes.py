@@ -1,3 +1,4 @@
+import logging
 from typing import Union
 
 import pandas as pd
@@ -5,6 +6,9 @@ from sklearn.base import BaseEstimator
 
 import mlflow
 from mlflow.tracking import MlflowClient
+
+
+log = logging.getLogger(__name__)
 
 
 def load_registered_model_version(model_name: str, version: int = -1) -> Union[BaseEstimator, None]:
@@ -74,5 +78,8 @@ def make_predictions(X: pd.DataFrame, ids: pd.DataFrame) -> pd.DataFrame:
     
     predictions_df = pd.DataFrame(champion_model.predict(X), columns=["prediction"])
     predictions_df = pd.concat([ids, predictions_df], axis=1)
+    
+    log.info(f"Predictions made: {predictions_df.shape}")
+    log.info(f"Number of positive predictions: {predictions_df['prediction'].sum()}")
     
     return predictions_df

@@ -1,4 +1,6 @@
-> finish prod
 > logging
 > more expectatons (more datasources and suites, maybe for dev, concat all datasets)
 > should we log stuff in mlflow in the prod pipeline?
+> load metric from champion instead of loading champion model
+> save prod features and imputer in params
+> random states

@@ -50,6 +50,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     apply_stateful_transformations_pipeline = apply_stateful_transformations.create_pipeline()
     model_inference_pipeline = model_inference.create_pipeline()
     feature_pruning_pipeline = feature_pruning.create_pipeline()
+    model_inference_pipeline = model_inference.create_pipeline()
     
     return {
         # individual pipelines for debugging
@@ -63,7 +64,10 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "concatenate_data": concatenate_data_pipeline,
         "explainability": explainability_pipeline,
         "data_drift": data_drift_pipeline,
-        
+        "track_ids": track_ids_pipeline,
+        "apply_stateful_transformations": apply_stateful_transformations_pipeline,
+        "feature_pruning": feature_pruning_pipeline,
+        "model_inference": model_inference_pipeline,       
         
         # main pipelines
         # run this when you want to upload data to the feature store (i.e. when you have new data)
@@ -78,7 +82,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
                                 model_selection_pipeline +\
                                     concatenate_data_pipeline +\
                                         explainability_pipeline +\
-                                            data_drift_pipeline,
+                                            data_drift_pipeline,            
                    
         "prod": data_ingestion_pipeline +\
             track_ids_pipeline +\

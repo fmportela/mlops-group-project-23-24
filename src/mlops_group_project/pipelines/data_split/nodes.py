@@ -1,7 +1,11 @@
+import logging
 from typing import Tuple
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+
+
+log = logging.getLogger(__name__)
 
 
 def two_step_proportions(train_p, val_p, test_p):
@@ -65,5 +69,9 @@ def split_data(
         stratify=y_train_val if stratify else None,
         random_state=random_state
     )
+    
+    log.info("Split Data")
+    log.info(f"Train shape: {X_train.shape} | Val shape: {X_val.shape} | Test shape: {X_test.shape}")
+    log.info(f"Train target shape: {y_train.shape} | Val target shape: {y_val.shape} | Test target shape: {y_test.shape}")
 
     return X_train, X_val, X_test, y_train, y_val, y_test

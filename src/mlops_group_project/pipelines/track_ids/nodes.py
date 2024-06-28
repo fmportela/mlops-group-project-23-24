@@ -1,4 +1,7 @@
+import logging
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 def split_features_and_ids(df: pd.DataFrame, id_column: str) -> pd.DataFrame:
     """
@@ -11,4 +14,7 @@ def split_features_and_ids(df: pd.DataFrame, id_column: str) -> pd.DataFrame:
     Returns:
         A DataFrame containing the features.
     """
+    
+    log.info("Splitting features and IDs.")
+    
     return df[[id_column]]

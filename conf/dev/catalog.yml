@@ -121,14 +121,13 @@ X_test_selected:
 # MlflowArtifactDataset: to save your model both locally and remotely within the same run.
 # check this out: https://kedro-mlflow.readthedocs.io/en/stable/source/04_experimentation_tracking/04_version_models.html
 
-champion_model:
+best_model_of_the_run:
   type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
   dataset:
     type: kedro_mlflow.io.models.MlflowModelLocalFileSystemDataset
     flavor: mlflow.sklearn
-    filepath: "data/dev/08_models/champion_model"
+    filepath: "data/dev/08_models/best_model_of_the_run"
     versioned: true
-
 
 
 # *********************
