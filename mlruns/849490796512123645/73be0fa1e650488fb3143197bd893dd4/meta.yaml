@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/849490796512123645/73be0fa1e650488fb3143197bd893dd4/artifacts
+end_time: 1719594964409
+entry_point_name: ''
+experiment_id: '849490796512123645'
+lifecycle_stage: active
+run_id: 73be0fa1e650488fb3143197bd893dd4
+run_name: LogisticRegression
+run_uuid: 73be0fa1e650488fb3143197bd893dd4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719594913828
+status: 3
+tags: []
+user_id: fmppo

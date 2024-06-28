@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/849490796512123645/7ad8e9c4f8924981bed28e757a4617d2/artifacts
+end_time: 1719594913771
+entry_point_name: ''
+experiment_id: '849490796512123645'
+lifecycle_stage: active
+run_id: 7ad8e9c4f8924981bed28e757a4617d2
+run_name: GradientBoostingClassifier
+run_uuid: 7ad8e9c4f8924981bed28e757a4617d2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719594861142
+status: 3
+tags: []
+user_id: fmppo
