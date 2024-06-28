@@ -6,6 +6,12 @@
 conf/local/**
 !conf/local/.gitkeep
 
+# ignore venv project_env //andre
+/project_env
+
+# ignore env related notes files
+notes/env_related/**
+
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
 
