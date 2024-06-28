@@ -77,6 +77,16 @@ id_column: "encounter_id"
 
 
 # *****************************
+# Data Unit Tests 2nd Batch
+# *****************************
+
+# after cleaning and feature engineering
+processed_datasource_name: "prod_processed_datasource"
+processed_suite_name: "prod_processed_suite"
+processed_data_asset_name: "stateful_data"
+build_data_docs: false
+
+# *****************************
 # Data Drift
 # *****************************
 

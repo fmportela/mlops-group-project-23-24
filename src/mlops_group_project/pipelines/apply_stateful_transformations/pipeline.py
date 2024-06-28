@@ -7,6 +7,6 @@ def create_pipeline(**kwargs) -> Pipeline:
         node(
             func=apply_transformations,
             inputs=["featurized_data", "imputer"],
-            outputs="stateful_data"
+            outputs="stateful_data_pre_validation"
         ),
     ])

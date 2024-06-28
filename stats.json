@@ -1,1 +1,1 @@
-{"raw_data": {"rows": 10177, "columns": 26, "file_size": 1067674}}
+{"X_train_selected": {"rows": 61058, "columns": 10, "file_size": 2682004}, "y_train": {"rows": 61058, "columns": 1, "file_size": 183186}, "X_val_selected": {"rows": 20354, "columns": 10, "file_size": 894268}, "y_val": {"rows": 20354, "columns": 1, "file_size": 61074}, "X_test_selected": {"rows": 20354, "columns": 10, "file_size": 894174}, "y_test": {"rows": 20354, "columns": 1, "file_size": 61074}}

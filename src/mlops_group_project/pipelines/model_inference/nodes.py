@@ -55,7 +55,8 @@ def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]
     for model in models:
         for alias in model.aliases.keys():
             if alias == "champion":
-                return load_registered_model_version(model.name, model.aliases[alias])
+                version = model.aliases[alias]
+                return load_registered_model_version(model.name, version)
     
     return None
 
