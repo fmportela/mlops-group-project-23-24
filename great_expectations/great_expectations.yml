@@ -15,77 +15,101 @@ config_version: 3.0
 # add a new datasource. Read more at https://docs.greatexpectations.io/docs/guides/connecting_to_your_data/connect_to_data_overview
 datasources:
   dev_raw_datasource:
-    class_name: Datasource
-    module_name: great_expectations.datasource
     execution_engine:
       module_name: great_expectations.execution_engine
       class_name: PandasExecutionEngine
+    module_name: great_expectations.datasource
     data_connectors:
       default_inferred_data_connector_name:
-        class_name: InferredAssetFilesystemDataConnector
         default_regex:
           group_names:
             - data_asset_name
           pattern: (.*)
-        module_name: great_expectations.datasource.data_connector
         base_directory: ../data/dev/01_raw
+        module_name: great_expectations.datasource.data_connector
+        class_name: InferredAssetFilesystemDataConnector
       default_runtime_data_connector_name:
+        module_name: great_expectations.datasource.data_connector
         assets:
           my_runtime_asset_name:
+            module_name: great_expectations.datasource.data_connector.asset
             batch_identifiers:
               - runtime_batch_identifier_name
             class_name: Asset
-            module_name: great_expectations.datasource.data_connector.asset
         class_name: RuntimeDataConnector
-        module_name: great_expectations.datasource.data_connector
+    class_name: Datasource
   prod_raw_datasource:
-    class_name: Datasource
-    module_name: great_expectations.datasource
     execution_engine:
       module_name: great_expectations.execution_engine
       class_name: PandasExecutionEngine
+    module_name: great_expectations.datasource
     data_connectors:
       default_inferred_data_connector_name:
-        class_name: InferredAssetFilesystemDataConnector
         default_regex:
           group_names:
             - data_asset_name
           pattern: (.*)
-        module_name: great_expectations.datasource.data_connector
         base_directory: ../data/prod/01_raw
+        module_name: great_expectations.datasource.data_connector
+        class_name: InferredAssetFilesystemDataConnector
       default_runtime_data_connector_name:
+        module_name: great_expectations.datasource.data_connector
         assets:
           my_runtime_asset_name:
+            module_name: great_expectations.datasource.data_connector.asset
             batch_identifiers:
               - runtime_batch_identifier_name
             class_name: Asset
-            module_name: great_expectations.datasource.data_connector.asset
         class_name: RuntimeDataConnector
-        module_name: great_expectations.datasource.data_connector
-  dev_processed_datasource:
     class_name: Datasource
-    module_name: great_expectations.datasource
+  dev_processed_datasource:
     execution_engine:
       module_name: great_expectations.execution_engine
       class_name: PandasExecutionEngine
+    module_name: great_expectations.datasource
     data_connectors:
       default_inferred_data_connector_name:
-        class_name: InferredAssetFilesystemDataConnector
         default_regex:
           group_names:
             - data_asset_name
           pattern: (.*)
-        module_name: great_expectations.datasource.data_connector
         base_directory: ../data/dev/06_stateful
+        module_name: great_expectations.datasource.data_connector
+        class_name: InferredAssetFilesystemDataConnector
       default_runtime_data_connector_name:
+        module_name: great_expectations.datasource.data_connector
         assets:
           my_runtime_asset_name:
+            module_name: great_expectations.datasource.data_connector.asset
             batch_identifiers:
               - runtime_batch_identifier_name
             class_name: Asset
-            module_name: great_expectations.datasource.data_connector.asset
         class_name: RuntimeDataConnector
+    class_name: Datasource
+  prod_processed_datasource:
+    execution_engine:
+      module_name: great_expectations.execution_engine
+      class_name: PandasExecutionEngine
+    module_name: great_expectations.datasource
+    data_connectors:
+      default_inferred_data_connector_name:
+        default_regex:
+          group_names:
+            - data_asset_name
+          pattern: (.*)
+        base_directory: ../data/prod/05_stateful
         module_name: great_expectations.datasource.data_connector
+        class_name: InferredAssetFilesystemDataConnector
+      default_runtime_data_connector_name:
+        module_name: great_expectations.datasource.data_connector
+        assets:
+          my_runtime_asset_name:
+            module_name: great_expectations.datasource.data_connector.asset
+            batch_identifiers:
+              - runtime_batch_identifier_name
+            class_name: Asset
+        class_name: RuntimeDataConnector
+    class_name: Datasource
 config_variables_file_path: uncommitted/config_variables.yml
 
 # The plugins_directory will be added to your python path for custom modules
@@ -152,6 +176,6 @@ data_docs_sites:
       class_name: DefaultSiteIndexBuilder
 
 anonymous_usage_statistics:
-  data_context_id: 9938477a-82ab-4e08-b1b2-52a34012d777
   enabled: true
+  data_context_id: 9938477a-82ab-4e08-b1b2-52a34012d777
 notebooks:

@@ -37,10 +37,11 @@ def drop_unwanted_columns(df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: Dataframe with columns dropped.
     """
 
-    # redundant / too many missing values
+    # redundant / too many missing values / id columns
     columns_to_drop = [
         "weight",
-        "payer_code",
+        "a1cresult",
+        "max_glu_serum",
         "medical_specialty",
         "encounter_id",
         "patient_nbr"
@@ -139,23 +140,19 @@ def encode_diabetes_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def encode_test_results(df: pd.DataFrame) -> pd.DataFrame:
+def encode_payer_code(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Encodes the test results columns.
-
+    Encodes the 'payer_code' column. If is null
+    then patient is not insured
+    
     Args:
         df: pd.DataFrame: Dataframe to replace tokens in.
-
+    
     Returns:
         pd.DataFrame: Dataframe with tokens replaced.
     """
-    dict_transform_a1cresult = {"Norm": 1, ">7": 2, ">8": 3, np.nan: 0}
-
-    df["a1cresult"] = df["a1cresult"].replace(dict_transform_a1cresult)
-
-    dict_max_glu_serum = {"Norm": 1, ">200": 2, ">300": 3, np.nan: 0}
-
-    df["max_glu_serum"] = df["max_glu_serum"].replace(dict_max_glu_serum)
+    
+    df["payer_code"] = df["payer_code"].apply(lambda x: 0 if pd.isnull(x) else 1)
     return df
 
 
@@ -177,7 +174,7 @@ def clean_df(X: pd.DataFrame) -> pd.DataFrame:
         encode_age_bracket,
         encode_race,
         encode_diabetes_columns,
-        encode_test_results
+        encode_payer_code,
     ]
 
     for func in cleaning_functions:

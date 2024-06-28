@@ -1,10 +1,18 @@
-<<<<<<< HEAD
 ##########################
 # KEDRO PROJECT
+
+mlruns/
+ml_artifacts/
 
 # ignore all local configuration
 conf/local/**
 !conf/local/.gitkeep
+
+# ignore venv project_env //andre
+/project_env
+
+# ignore env related notes files
+notes/env_related/**
 
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
@@ -56,8 +64,6 @@ atlassian-ide-plugin.xml
 *.so
 
 ### Python template
-=======
->>>>>>> origin/main
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

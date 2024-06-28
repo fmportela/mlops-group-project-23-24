@@ -1,0 +1,43 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.14
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.4.2
+mlflow_version: 2.11.3
+model_size_bytes: 68011
+model_uuid: fb05bc231d7b44f8ae981b8913db5e5f
+run_id: 7ad8e9c4f8924981bed28e757a4617d2
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "race", "required": true}, {"type": "double",
+    "name": "gender", "required": true}, {"type": "double", "name": "age", "required":
+    true}, {"type": "double", "name": "admission_type_id", "required": true}, {"type":
+    "double", "name": "discharge_disposition_id", "required": true}, {"type": "double",
+    "name": "admission_source_id", "required": true}, {"type": "double", "name": "time_in_hospital",
+    "required": true}, {"type": "double", "name": "num_lab_procedures", "required":
+    true}, {"type": "double", "name": "num_procedures", "required": true}, {"type":
+    "double", "name": "num_medications", "required": true}, {"type": "double", "name":
+    "number_outpatient", "required": true}, {"type": "double", "name": "number_emergency",
+    "required": true}, {"type": "double", "name": "number_inpatient", "required":
+    true}, {"type": "double", "name": "number_diagnoses", "required": true}, {"type":
+    "double", "name": "max_glu_serum", "required": true}, {"type": "double", "name":
+    "a1cresult", "required": true}, {"type": "double", "name": "change", "required":
+    true}, {"type": "double", "name": "diabetesmed", "required": true}, {"type": "double",
+    "name": "total_visits_in_previous_year", "required": true}, {"type": "double",
+    "name": "comorbidity_index", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+utc_time_created: '2024-06-28 17:14:57.319478'
