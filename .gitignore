@@ -1,6 +1,8 @@
-<<<<<<< HEAD
 ##########################
 # KEDRO PROJECT
+
+mlruns/
+ml_artifacts/
 
 # ignore all local configuration
 conf/local/**
@@ -62,8 +64,6 @@ atlassian-ide-plugin.xml
 *.so
 
 ### Python template
-=======
->>>>>>> origin/main
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
