@@ -1,0 +1,21 @@
+digest: 10feede1
+name: dataset
+profile: '{"num_rows": 20354, "num_elements": 407080}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "race", "required": true},
+  {"type": "double", "name": "gender", "required": true}, {"type": "double", "name":
+  "age", "required": true}, {"type": "double", "name": "admission_type_id", "required":
+  true}, {"type": "double", "name": "discharge_disposition_id", "required": true},
+  {"type": "double", "name": "admission_source_id", "required": true}, {"type": "double",
+  "name": "time_in_hospital", "required": true}, {"type": "double", "name": "num_lab_procedures",
+  "required": true}, {"type": "double", "name": "num_procedures", "required": true},
+  {"type": "double", "name": "num_medications", "required": true}, {"type": "double",
+  "name": "number_outpatient", "required": true}, {"type": "double", "name": "number_emergency",
+  "required": true}, {"type": "double", "name": "number_inpatient", "required": true},
+  {"type": "double", "name": "number_diagnoses", "required": true}, {"type": "double",
+  "name": "max_glu_serum", "required": true}, {"type": "double", "name": "a1cresult",
+  "required": true}, {"type": "double", "name": "change", "required": true}, {"type":
+  "double", "name": "diabetesmed", "required": true}, {"type": "double", "name": "total_visits_in_previous_year",
+  "required": true}, {"type": "double", "name": "comorbidity_index", "required": true}]}'
+source: '{"tags": {"mlflow.user": "fmppo", "mlflow.source.name": "C:\\Users\\fmppo\\Desktop\\MSDSAA\\Y1\\S2\\MLOps\\mlops-group-project\\env\\Scripts\\kedro",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

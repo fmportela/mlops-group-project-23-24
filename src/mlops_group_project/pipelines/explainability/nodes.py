@@ -56,6 +56,11 @@ def calculate_permutation_importance(
             'n_repeats': n_repeats,
             'random_state': random_state
         })
+        
+        for i, row in importance_df.iterrows():
+            mlflow.log_param(f"{row['feature']}_importance_mean", row['importance_mean'])
+            mlflow.log_param(f"{row['feature']}_importance_std", row['importance_std'])
+        
     
     log.info(f"Most important features calculated: {importance_df.head(5)}")
             
