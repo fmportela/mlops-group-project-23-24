@@ -130,10 +130,12 @@ def encode_diabetes_columns(df: pd.DataFrame) -> pd.DataFrame:
     dict_diabetes_med = {"No": 0, "Yes": 1}
 
     df["diabetesmed"] = df["diabetesmed"].map(dict_diabetes_med)
+    print("CHEGUEI AQUI")
 
     dict_change_transform = {"No": 0, "Ch": 1}
 
     df["change"] = df["change"].map(dict_change_transform)
+    print("CHEGUEI AQUI 2")
     return df
 
 
