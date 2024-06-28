@@ -135,7 +135,7 @@ champion_model:
 # Aggreated Data
 # *********************
 
-concatenated_processed_data:
+stateful_data:
   type: pandas.CSVDataset
   filepath: "data/dev/09_reporting/concatenated_processed_data.csv"
 

@@ -1,3 +1,5 @@
+import warnings; warnings.filterwarnings('ignore')
+
 import pandas as pd
 import numpy as np
 
@@ -27,28 +29,30 @@ def calculate_permutation_importance(
         pd.DataFrame: Dataframe containing permutation importance scores.
     """
     
-    X = df.drop(columns=["readmitted"])
-    y = np.ravel(df["readmitted"])
-    
-    result = permutation_importance(
-        model,
-        X, y,
-        n_repeats=n_repeats,
-        random_state=random_state,
-    )
-    
-    importance_df = pd.DataFrame({
-        'feature': X.columns,
-        'importance_mean': result.importances_mean,
-        'importance_std': result.importances_std
-    }).sort_values(
-        by='importance_mean',
-        ascending=False
-    )
-    
-    # Log the permutation importance as a CSV in mlflow
     with mlflow.start_run(run_name="permutation_importance", nested=True):
-        importance_df.to_csv("permutation_importance.csv", index=False)
-        mlflow.log_artifact("permutation_importance.csv")
+        X = df.drop(columns=["readmitted"])
+        y = np.ravel(df["readmitted"])
+        
+        result = permutation_importance(
+            model,
+            X, y,
+            n_repeats=n_repeats,
+            random_state=random_state,
+        )
+        
+        importance_df = pd.DataFrame({
+            'feature': X.columns,
+            'importance_mean': result.importances_mean,
+            'importance_std': result.importances_std
+        }).sort_values(
+            by='importance_mean',
+            ascending=False
+        )
+        
+        mlflow.log_params({
+            'n_repeats': n_repeats,
+            'random_state': random_state
+        })
+            
     
     return importance_df

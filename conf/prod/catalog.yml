@@ -1,6 +1,9 @@
-# ******************************
-# Data Upload Catalog
-# ******************************
+# NOTE: we are fetching some data from dev. although it is not recommended we are doing it for the sake of simplicity.
+
+
+# *********************
+# Data Upload
+# *********************
 
 raw_data:
   type: pandas.CSVDataset
@@ -9,15 +12,24 @@ raw_data:
     sep: ','
   
 
-# ******************************
-# Data Ingestion Catalog
-# ******************************
+# *********************
+# Data Ingestion
+# *********************
 
 valid_data:
   type: pandas.CSVDataset
   filepath: "data/prod/02_valid/valid_data.csv"
   load_args:
     sep: ','
+
+# *********************
+# trackings ids
+# *********************
+
+ids:
+  type: pandas.CSVDataset
+  filepath: "data/prod/02_valid/ids.csv"
+
 
 
 # *********************
@@ -27,3 +39,60 @@ valid_data:
 clean_data:
   type: pandas.CSVDataset
   filepath: "data/prod/03_stateless/clean_data.csv"
+
+
+# *********************
+# Feat. Engineering
+# *********************
+
+featurized_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/04_featurized/featurized_data.csv"
+
+
+# *********************
+# Stateful Cleaning
+# *********************
+
+imputer:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: kedro_mlflow.io.models.MlflowModelLocalFileSystemDataset
+    flavor: mlflow.sklearn
+    filepath: "data/dev/06_stateful/imputer"  # from dev
+
+stateful_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/05_stateful/stateful_data.csv"
+
+
+# *********************
+# Feature Pruning
+# *********************
+
+selected_features: 
+  type: pickle.PickleDataset
+  filepath: "data/dev/07_model_input/selected_features.pkl"  # from dev
+
+pruned_data:
+  type: pandas.CSVDataset
+  filepath: "data/prod/06_pruned/pruned_data.csv"
+
+
+# *********************
+# Predictions
+# *********************
+
+predictions:
+  type: pandas.CSVDataset
+  filepath: "data/prod/07_predictions/predictions.csv"
+
+
+# *********************
+# Data Drift
+# *********************
+
+# check the create_example_reference_data.py file to see how it was created!
+reference_data:
+  type: pandas.CSVDataset
+  filepath: "data/reference/reference_data.csv"

@@ -67,3 +67,18 @@ feature_descriptions:
     description: Indicates if there was a change in medication
   - name: diabetesmed
     description: Indicates if diabetes medication was given
+
+
+# *****************************
+# Split Ids and Features
+# *****************************
+
+id_column: "encounter_id"
+
+
+# *****************************
+# Data Drift
+# *****************************
+
+# adding here because Kedro does not support "html" datasets
+data_drift_output_path: "data/prod/08_reporting/data_drift_analysis.html"

@@ -12,7 +12,11 @@ from .pipelines import (
     model_selection,
     concatenate_data,
     explainability,
-    data_drift
+    data_drift,
+    track_ids,
+    apply_stateful_transformations,
+    feature_pruning,
+    model_inference,
 )
 
 
@@ -42,7 +46,10 @@ def register_pipelines() -> Dict[str, Pipeline]:
     concatenate_data_pipeline = concatenate_data.create_pipeline()
     explainability_pipeline = explainability.create_pipeline()
     data_drift_pipeline = data_drift.create_pipeline()
-    
+    track_ids_pipeline = track_ids.create_pipeline()
+    apply_stateful_transformations_pipeline = apply_stateful_transformations.create_pipeline()
+    model_inference_pipeline = model_inference.create_pipeline()
+    feature_pruning_pipeline = feature_pruning.create_pipeline()
     
     return {
         # individual pipelines for debugging
@@ -59,7 +66,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
         
         
         # main pipelines
-        "data_upload": data_upload_pipeline,  # env. dependent
+        # run this when you want to upload data to the feature store (i.e. when you have new data)
+        "data_upload": data_upload_pipeline,  # env. dependent i.e. kedro --pipeline data_upload --env=dev or prod
         
         "dev": data_ingestion_pipeline +\
             stateless_cleaning_pipeline +\
@@ -73,5 +81,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
                                             data_drift_pipeline,
                    
         "prod": data_ingestion_pipeline +\
-            stateless_cleaning_pipeline,
+            track_ids_pipeline +\
+                stateless_cleaning_pipeline +\
+                    feature_engineering_pipeline +\
+                        apply_stateful_transformations_pipeline +\
+                            feature_pruning_pipeline +\
+                                model_inference_pipeline +\
+                                    data_drift_pipeline,
     }

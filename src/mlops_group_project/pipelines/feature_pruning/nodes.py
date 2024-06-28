@@ -1,4 +1,4 @@
-"""
-This is a boilerplate pipeline 'feature_pruning'
-generated using Kedro 0.19.4
-"""
+import pandas as pd
+
+def select_features(df: pd.DataFrame, features: list) -> pd.DataFrame:
+    return df[features]

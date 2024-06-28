@@ -1,10 +1,12 @@
-"""
-This is a boilerplate pipeline 'feature_pruning'
-generated using Kedro 0.19.4
-"""
-
-from kedro.pipeline import Pipeline, pipeline
+from kedro.pipeline import Pipeline, pipeline, node
+from .nodes import select_features
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    return pipeline([])
+    return pipeline([
+        node(
+            func=select_features,
+            inputs=["stateful_data", "selected_features"],
+            outputs="pruned_data"
+        )
+    ])
