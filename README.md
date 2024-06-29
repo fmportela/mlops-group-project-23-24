@@ -1,5 +1,17 @@
 # MLOps Group Project
 
+**GROUP C**
+
+André Filipe Silva - 20230972
+
+Diogo Almeida - 20230737
+
+Frederico Portela - 20181072
+
+Gonçalo Caldeirinha - 20230469
+
+João Pedro Mota - 20230454
+
 ## Overview
 
 Kedro project with Kedro-Viz and Kedro-MlFlow setup, which was generated using `kedro 0.19.4`.
