@@ -14,7 +14,8 @@ log = logging.getLogger(__name__)
 
 def calculate_permutation_importance(
     model: BaseEstimator, 
-    df: pd.DataFrame, 
+    X: pd.DataFrame, 
+    y: pd.Series,
     n_repeats: int = 5, 
     random_state: int = 42
 ) -> pd.DataFrame:
@@ -32,10 +33,7 @@ def calculate_permutation_importance(
         pd.DataFrame: Dataframe containing permutation importance scores.
     """
     
-    with mlflow.start_run(run_name="permutation_importance", nested=True):
-        X = df.drop(columns=["readmitted"])
-        y = np.ravel(df["readmitted"])
-        
+    with mlflow.start_run(run_name="permutation_importance", nested=True):        
         result = permutation_importance(
             model,
             X, y,

@@ -6,7 +6,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([
         node(
             func=select_features,
-            inputs=["stateful_data", "selected_features"],
+            inputs=["stateful_data", "params:features_to_select"],
             outputs="pruned_data"
         )
     ])

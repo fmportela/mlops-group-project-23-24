@@ -1,5 +1,5 @@
 import logging
-from typing import Tuple, Union
+from typing import Tuple, Union, Dict
 import warnings; warnings.filterwarnings('ignore')
 
 import pandas as pd
@@ -22,11 +22,6 @@ log = logging.getLogger(__name__)
 # our approach is to store promosiing models as "challengers". Which after further testing (e.g. shadow testing)
 # can indeed be manually promoted to champion. This is a common practice in ML engineering.
 
-
-# TODO add random state
-
-
-# should this also go into a 'utils'-like module?
 MODELS_DICT = {
     'RandomForestClassifier': {
         'model': RandomForestClassifier(),
@@ -83,55 +78,24 @@ def register_model(
             )
 
 
-# NOTE: if true champion model is stored locally then this probably won't be necessary
-def load_registered_model_version(model_name: str, version: int = -1) -> Union[BaseEstimator, None]:
-    """
-    Load a specific version of a registered model from the
-    MLflow Model Registry. If version is -1, load the latest version.
-    Useful: https://mlflow.org/docs/latest/model-registry.html    
-    
-    Args:
-        model_name (str): The name of the registered model.
-        version (int): The version of the model to load, or -1 for the latest version.
-    
-    Returns:
-        model: The loaded model. Or None if there is no matching model.
-    """
-    client = MlflowClient()
-
-    if version == -1:
-        # get the latest version
-        versions = client.get_latest_versions(model_name)
-        if not versions:
-            raise Exception(f"No versions found for model {model_name}")
-        latest_version = max(versions, key=lambda v: v.version).version
-        version = latest_version
-    
-    model_uri = f"models:/{model_name}/{version}"
-    try:
-        model = mlflow.sklearn.load_model(model_uri)
-        return model
-    except Exception as e:
-        raise Exception(f"Could not load model from Registry: {e}")
-    
-    
-def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]:
-    """
-    Locate the champion model in the MLflow Model Registry.
-    
-    Returns:
-        model: The champion model. Or None if there is no champion model.
-    """
-    client = MlflowClient()
-    
-    models = client.search_registered_models()
-    for model in models:
-        for alias in model.aliases.keys():
-            if alias == "champion":
-                return load_registered_model_version(model.name, model.aliases[alias])
-    
-    return None
-
+def locate_champion_model_metrics() -> Union[Dict[str, float], None]:
+        """
+        Locate the champion model in the MLflow Model Registry and returns its metrics.
+        
+        Returns:
+            model: The champion model. Or None if there is no champion model.
+        """
+        client = MlflowClient()
+        models = client.search_registered_models()
+        
+        for model in models:
+            for alias in model.aliases.keys():
+                if alias == "champion":
+                    version = int(model.aliases[alias]) - 1  # e.g. version '1' in the list is actually the index 0 (it starts at 1)
+                    metrics = client.get_run(model.latest_versions[version].run_id).data.metrics
+                    return metrics
+        
+        return None
 
 
 def optuna_objective(
@@ -197,7 +161,7 @@ def select_model(
     y_val: pd.Series,
     X_test: pd.DataFrame,
     y_test: pd.Series,
-    n_trials: int = 50,
+    n_trials: int = 20,
     models: dict = MODELS_DICT
 ) -> BaseEstimator:
     
@@ -269,18 +233,18 @@ def select_model(
             
             log.info(f"Best model: {best_model_name}")
                        
-            # loading the champion model
-            champion_model = locate_champion_model()
+            # loading the champion model score
+            champion_model_metrics = locate_champion_model_metrics()
             
             # comparing challenger to champion
-            if champion_model is not None:
-                # check this out: https://mlflow.org/docs/latest/model-registry.html
-                champion_test_pred = champion_model.predict(X_test)
-                champion_f1 = f1_score(np.ravel(y_test), champion_test_pred, pos_label=1)
+            if champion_model_metrics is not None:
+                champion_model_score = champion_model_metrics['testing_f1_score_1']
+                print(f"Champion model F1-score: {champion_model_score}")
                 
-                print(f"Champion model F1-score: {champion_f1}")
-                
-                if best_score >= champion_f1:
+                if best_score >= champion_model_score:
+                    
+                    log.info("Challenger model is better than champion model.")
+                    
                     # register the best model as the a promising challenger
                     register_model(
                         f"runs:/{best_run_id}/model",
@@ -297,21 +261,5 @@ def select_model(
                 )
          
     return best_model
-
-
-if __name__ == '__main__':
-    # testing
-    import os
-
-    params = {
-        'X_train': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_train_selected.csv')),
-        'y_train': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_train.csv')),
-        'X_val': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_val_selected.csv')),
-        'y_val': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_val.csv')),
-        'X_test': pd.read_csv(os.path.join('data', 'dev', '07_model_input', 'X_test_selected.csv')),
-        'y_test': pd.read_csv(os.path.join('data', 'dev', '05_split', 'y_test.csv')),
-        'n_trials': 1,
-        'models': MODELS_DICT
-    }
     
-    select_model(**params)
+    

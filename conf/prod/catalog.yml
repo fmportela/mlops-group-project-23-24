@@ -31,7 +31,6 @@ ids:
   filepath: "data/prod/02_valid/ids.csv"
 
 
-
 # *********************
 # Stateless Cleaning
 # *********************
@@ -61,7 +60,16 @@ imputer:
     flavor: mlflow.sklearn
     filepath: "data/dev/06_stateful/imputer"  # from dev
 
-stateful_data:
+stateful_data_pre_validation:
+  type: pandas.CSVDataset
+  filepath: "data/prod/05_stateful/stateful_data_pre_validation.csv"
+
+
+# *********************
+# After Data Validation
+# *********************
+
+stateful:
   type: pandas.CSVDataset
   filepath: "data/prod/05_stateful/stateful_data.csv"
 
@@ -69,10 +77,6 @@ stateful_data:
 # *********************
 # Feature Pruning
 # *********************
-
-selected_features:
-  type: pickle.PickleDataset
-  filepath: "data/dev/07_model_input/selected_features.pkl"  # from dev
 
 pruned_data:
   type: pandas.CSVDataset

@@ -21,7 +21,11 @@ def data_drift_report(
         current_data: Current data.
         output_path: Path to save the report.
     """
-    
+    # making sure both pertain to the same features
+    shared_columns = list(set(reference_data.columns).intersection(set(current_data.columns)))
+    reference_data = reference_data[shared_columns].copy()
+    current_data = current_data[shared_columns].copy()
+            
     data_drift_report = Report(
         metrics=[
             DataDriftPreset()

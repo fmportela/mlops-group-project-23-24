@@ -15,6 +15,7 @@ from .pipelines import (
     data_drift,
     track_ids,
     apply_stateful_transformations,
+    data_unit_tests_after_processing,
     feature_pruning,
     model_inference,
 )
@@ -48,6 +49,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_drift_pipeline = data_drift.create_pipeline()
     track_ids_pipeline = track_ids.create_pipeline()
     apply_stateful_transformations_pipeline = apply_stateful_transformations.create_pipeline()
+    data_unit_tests_after_processing_pipeline = data_unit_tests_after_processing.create_pipeline()
     model_inference_pipeline = model_inference.create_pipeline()
     feature_pruning_pipeline = feature_pruning.create_pipeline()
     model_inference_pipeline = model_inference.create_pipeline()
@@ -66,6 +68,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "data_drift": data_drift_pipeline,
         "track_ids": track_ids_pipeline,
         "apply_stateful_transformations": apply_stateful_transformations_pipeline,
+        "data_unit_tests_after_processing": data_unit_tests_after_processing_pipeline,  # prod only in this PoC
         "feature_pruning": feature_pruning_pipeline,
         "model_inference": model_inference_pipeline,       
         
@@ -89,7 +92,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
                 stateless_cleaning_pipeline +\
                     feature_engineering_pipeline +\
                         apply_stateful_transformations_pipeline +\
-                            feature_pruning_pipeline +\
-                                model_inference_pipeline +\
-                                    data_drift_pipeline,
+                            data_unit_tests_after_processing_pipeline +\
+                                feature_pruning_pipeline +\
+                                    model_inference_pipeline +\
+                                        data_drift_pipeline,
     }

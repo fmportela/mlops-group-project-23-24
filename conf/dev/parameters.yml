@@ -87,30 +87,17 @@ stratify: True
 # can be "rfe", "tree" or "all" or "manual"
 # if "manual" then specify the features in the list below
 # if "rfe" or "tree" then specify the model parameters below
-feature_selection: "all"
-manual_features: []
-
+feature_selection: "manual"
+manual_features: ["race", "gender", "age", "discharge_disposition_id", "time_in_hospital", "payer_code", "num_medications", "change", "total_visits_in_previous_year", "comorbidity_index"]
 # for RFE
+# fs_model_params:
+#   random_state: 42
+
+# for Tree
 fs_model_params:
-  n_estimators: 100
-  max_depth: 6
-  max_features: 20
   random_state: 42
 
-# fs_model_params:
-#   n_estimators: 100
-#   max_depth: 6
-#   max_features: 20
-#   random_state: 42
-#   criterion: "gini"
-#   splitter: "best"
-#   min_samples_split: 2
-#   min_samples_leaf: 1
-#   random_state: 42
-#   max_leaf_nodes: None
-#   class_weight: None
-
-n_features: 12
+n_features: 10
 
 
 # *****************************
