@@ -15,7 +15,7 @@ import os
 
 
 def test_feature_selection():
-    path_to_label = os.path.join("tests/sample/y_train.csv") 
+    path_to_label = os.path.join("tests/sample/sample_y_train.csv") 
     path_to_features = os.path.join("tests/sample/sample_data_statefull_X_train.csv")
     
     

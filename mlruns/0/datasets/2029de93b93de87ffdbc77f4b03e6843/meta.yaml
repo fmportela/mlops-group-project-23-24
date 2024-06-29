@@ -1,0 +1,15 @@
+digest: '65539355'
+name: dataset
+profile: '{"num_rows": 500, "num_elements": 5000}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "race", "required": true},
+  {"type": "double", "name": "gender", "required": true}, {"type": "double", "name":
+  "age", "required": true}, {"type": "double", "name": "discharge_disposition_id",
+  "required": true}, {"type": "double", "name": "time_in_hospital", "required": true},
+  {"type": "double", "name": "payer_code", "required": true}, {"type": "double", "name":
+  "num_medications", "required": true}, {"type": "double", "name": "change", "required":
+  true}, {"type": "double", "name": "total_visits_in_previous_year", "required": true},
+  {"type": "double", "name": "comorbidity_index", "required": true}]}'
+source: '{"tags": {"mlflow.user": "joaop", "mlflow.source.name": "C:\\Users\\joaop\\Desktop\\Mestrado\\1\u00ba
+  Ano\\2\u00ba Semestre\\MLOps\\Laborat\u00f3rio de MLOps\\mlops\\Scripts\\pytest",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code
