@@ -6,7 +6,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([
         node(
             func=calculate_permutation_importance,
-            inputs=["best_model_of_the_run", "concatenated_processed_data"],
+            inputs=["best_model_of_the_run", "X_train_selected", "y_train"],
             outputs="permutation_importance"
         )
     ])

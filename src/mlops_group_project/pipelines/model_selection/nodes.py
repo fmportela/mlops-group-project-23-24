@@ -78,57 +78,6 @@ def register_model(
             )
 
 
-# NOTE: if true champion model is stored locally then this probably won't be necessary
-def load_registered_model_version(model_name: str, version: int = -1) -> Union[BaseEstimator, None]:
-    """
-    Load a specific version of a registered model from the
-    MLflow Model Registry. If version is -1, load the latest version.
-    Useful: https://mlflow.org/docs/latest/model-registry.html    
-    
-    Args:
-        model_name (str): The name of the registered model.
-        version (int): The version of the model to load, or -1 for the latest version.
-    
-    Returns:
-        model: The loaded model. Or None if there is no matching model.
-    """
-    client = MlflowClient()
-
-    if version == -1:
-        # get the latest version
-        versions = client.get_latest_versions(model_name)
-        if not versions:
-            raise Exception(f"No versions found for model {model_name}")
-        latest_version = max(versions, key=lambda v: v.version).version
-        version = latest_version
-    
-    model_uri = f"models:/{model_name}/{version}"
-    try:
-        model = mlflow.sklearn.load_model(model_uri)
-        return model
-    except Exception as e:
-        raise Exception(f"Could not load model from Registry: {e}")
-    
-    
-def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]:
-    """
-    Locate the champion model in the MLflow Model Registry.
-    
-    Returns:
-        model: The champion model. Or None if there is no champion model.
-    """
-    client = MlflowClient()
-    
-    models = client.search_registered_models()
-    for model in models:
-        for alias in model.aliases.keys():
-            if alias == "champion":
-                version = model.aliases[alias]
-                return load_registered_model_version(model.name, version)
-    
-    return None
-
-
 def locate_champion_model_metrics() -> Union[Dict[str, float], None]:
         """
         Locate the champion model in the MLflow Model Registry and returns its metrics.
@@ -285,11 +234,11 @@ def select_model(
             log.info(f"Best model: {best_model_name}")
                        
             # loading the champion model score
-            champion_model_score = locate_champion_model_metrics()['testing_f1_score_1']
+            champion_model_metrics = locate_champion_model_metrics()
             
             # comparing challenger to champion
-            if champion_model_score is not None:
-                                
+            if champion_model_metrics is not None:
+                champion_model_score = champion_model_metrics['testing_f1_score_1']
                 print(f"Champion model F1-score: {champion_model_score}")
                 
                 if best_score >= champion_model_score:
