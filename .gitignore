@@ -1,33 +1,33 @@
 ##########################
 # KEDRO PROJECT
 
-mlruns/
-ml_artifacts/
+# mlruns/
+# ml_artifacts/
 
-# ignore all local configuration
-conf/local/**
-!conf/local/.gitkeep
+# # ignore all local configuration
+# conf/local/**
+# !conf/local/.gitkeep
 
-# ignore venv project_env //andre
-/project_env
+# # ignore venv project_env //andre
+# /project_env
 
-# ignore env related notes files
-notes/env_related/**
+# # ignore env related notes files
+# notes/env_related/**
 
-# ignore potentially sensitive credentials files
-conf/**/*credentials*
+# # ignore potentially sensitive credentials files
+# conf/**/*credentials*
 
-# ignore everything in the following folders
-data/**
+# # ignore everything in the following folders
+# data/**
 
-# except their sub-folders
-!data/**/
+# # except their sub-folders
+# !data/**/
 
-# also keep all .gitkeep files
-!.gitkeep
+# # also keep all .gitkeep files
+# !.gitkeep
 
-# keep also the example dataset
-!data/01_raw/*
+# # keep also the example dataset
+# !data/01_raw/*
 
 
 ##########################
