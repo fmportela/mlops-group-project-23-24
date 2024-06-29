@@ -9,13 +9,26 @@ https://docs.pytest.org/en/latest/getting-started.html
 """
 import pytest
 # from kedro.framework.context import KedroContext
-from src.mlops_group_project.pipelines.stateless_cleaning.nodes import replace_pseudo_nulls, drop_unwanted_columns, encode_gender, encode_age_bracket, encode_race, encode_diabetes_columns, encode_test_results, clean_df
+from src.mlops_group_project.pipelines.stateless_cleaning.nodes import replace_pseudo_nulls, drop_unwanted_columns, encode_gender, encode_age_bracket, encode_race, encode_diabetes_columns, clean_df, encode_payer_code
 import os
 import pandas as pd
 import numpy as np
 import math
 
 
+
+
+
+
+def test_replace_pseudo_nulls():
+    filepath = os.path.join("tests/sample/sample_raw_data.csv")
+    df_sample = pd.read_csv(filepath)
+
+    result = replace_pseudo_nulls(df_sample)
+    # get rows that contain '?' in the cell
+    rows_with_question_mark = result[result.eq('?').any(axis=1)]
+    
+    assert len(rows_with_question_mark) == 0, f"Rows with '?' in the cell: {rows_with_question_mark}"
 
 
 def test_encode_gender():
@@ -76,16 +89,16 @@ def test_encode_age_bracket():
 
 
 
-# def test_drop_unwanted_columns():
-#     filepath = os.path.join("tests/sample/sample_raw_data.csv")
-#     df_sample = pd.read_csv(filepath)
+def test_drop_unwanted_columns():
+    filepath = os.path.join("tests/sample/sample_raw_data.csv")
+    df_sample = pd.read_csv(filepath)
 
-#     result = drop_unwanted_columns(df_sample)
-#     print(result.columns)
-#     assert {"weight",
-#         "payer_code",
-#         "medical_specialty",
-#         "patient_nbr"} not in set(result.columns.tolist())
+    result = drop_unwanted_columns(df_sample)
+    print(result.columns)
+    assert {"weight",
+        "payer_code",
+        "medical_specialty",
+        "patient_nbr"} not in set(result.columns.tolist())
 
 
 def test_encode_race():
@@ -100,21 +113,34 @@ def test_encode_race():
         else:
             assert element in [0, 1, 2, 3, 4, np.nan], f"{element} not in [0, 1, 2, 3, 4, np.nan]"
 
+
 def test_encode_diabetes_columns():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
     df_sample = pd.read_csv(filepath)
 
     result = encode_diabetes_columns(df_sample)
-    assert set(result["diabetesMed"].unique().tolist()) == {0, 1}
+    assert set(result["diabetesmed"].unique().tolist()) == {0, 1}
     assert set(result["change"].unique().tolist()) == {0, 1}
 
-def test_encode_test_results():
+
+
+def test_encode_payer_code():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
     df_sample = pd.read_csv(filepath)
 
-    result = encode_test_results(df_sample)
-    assert set(result["A1Cresult"].unique().tolist()) == {0, 1, 2, 3}
-    assert set(result["max_glu_serum"].unique().tolist()) == {0, 1, 2, 3}
+    result = encode_payer_code(df_sample)
+    print(set(result["payer_code"].unique().tolist()))
+    assert set(result["payer_code"].unique().tolist()) in [{0}, {1}, {0, 1}]
+
+
+
+# def test_encode_test_results():
+#     filepath = os.path.join("tests/sample/sample_raw_data.csv")
+#     df_sample = pd.read_csv(filepath)
+
+#     result = encode_test_results(df_sample)
+#     assert set(result["A1Cresult"].unique().tolist()) == {0, 1, 2, 3}
+#     assert set(result["max_glu_serum"].unique().tolist()) == {0, 1, 2, 3}
 
 
 
@@ -125,20 +151,19 @@ def test_encode_test_results():
 # #     result = fix_readmitted(df_sample)
 # #     assert set(result["readmitted"].unique().tolist()) == {0, 1}
 
-# def test_clean_df():
-#     filepath = os.path.join("tests/sample/sample_raw_data.csv")
-#     df_sample = pd.read_csv(filepath)
+def test_clean_df():
+    filepath = os.path.join("tests/sample/sample_raw_data.csv")
+    df_sample = pd.read_csv(filepath)
 
-#     filepath_target_data = os.path.join("tests/sample/target_sample_raw_data.csv")
-#     df_target = pd.read_csv(filepath_target_data)
-#     data, target = clean_df(df_sample, df_target)
+    filepath_target_data = os.path.join("tests/sample/target_sample_raw_data.csv")
+    data = clean_df(df_sample)
     
-#     # check that all columns are of type int/float/bool
+    # check that all columns are of type int/float/bool
     
-#     cols = data.columns.tolist()
-#     for col in cols:
-#         assert data[col].dtype in [np.int64, np.int32, np.float64, np.float32, np.bool_]
-#     assert target.dtype in [np.int64, np.int32, np.float64, np.float32, np.bool_]
+    cols = data.columns.tolist()
+    for col in cols:
+        assert data[col].dtype in [np.int64, np.int32, np.object_,np.float64, np.float32, np.bool_]
+
 
 
 # if __name__ == '__main__':

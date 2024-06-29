@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1719623066434
+current_stage: None
+description: ''
+last_updated_timestamp: 1719623066434
+name: RandomForestClassifier
+run_id: 78ac681640d64672a32b2ee5403671ed
+run_link: ''
+source: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/827134015475129760/78ac681640d64672a32b2ee5403671ed/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/827134015475129760/78ac681640d64672a32b2ee5403671ed/artifacts/model
+user_id: null
+version: 1

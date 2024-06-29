@@ -2,7 +2,6 @@ import logging
 import pandas as pd
 import numpy as np
 
-
 log = logging.getLogger(__name__)
 
 # NOTE: given that hopsworks lowercases the names of the columns, after ingestion those same
@@ -20,6 +19,7 @@ def replace_pseudo_nulls(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Dataframe with tokens replaced.
     """
+    
 
     # replace pseudo nulls with np.nan
     df = df.replace("?", np.nan)
@@ -131,12 +131,12 @@ def encode_diabetes_columns(df: pd.DataFrame) -> pd.DataFrame:
     dict_diabetes_med = {"No": 0, "Yes": 1}
 
     df["diabetesmed"] = df["diabetesmed"].map(dict_diabetes_med)
-    print("CHEGUEI AQUI")
+    # print("CHEGUEI AQUI")
 
     dict_change_transform = {"No": 0, "Ch": 1}
 
     df["change"] = df["change"].map(dict_change_transform)
-    print("CHEGUEI AQUI 2")
+    # print("CHEGUEI AQUI 2")
     return df
 
 

@@ -48,11 +48,11 @@ X_train:
 
 X_val:
   type: pandas.CSVDataset
-  filepath: "data/dev/05_split/X_val_stateless:.csv"
+  filepath: "data/dev/05_split/X_val_stateless.csv"
 
 X_test:
   type: pandas.CSVDataset
-  filepath: "data/dev/05_split/X_test_stateless:.csv"
+  filepath: "data/dev/05_split/X_test_stateless.csv"
 
 y_train:
   type: pandas.CSVDataset
