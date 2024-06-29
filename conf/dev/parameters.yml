@@ -87,9 +87,8 @@ stratify: True
 # can be "rfe", "tree" or "all" or "manual"
 # if "manual" then specify the features in the list below
 # if "rfe" or "tree" then specify the model parameters below
-feature_selection: "tree"
-manual_features: []
-
+feature_selection: "manual"
+manual_features: ["race", "gender", "age", "discharge_disposition_id", "time_in_hospital", "payer_code", "num_medications", "change", "total_visits_in_previous_year", "comorbidity_index"]
 # for RFE
 # fs_model_params:
 #   random_state: 42

@@ -124,22 +124,6 @@
     {
       "expectation_type": "expect_column_values_to_be_of_type",
       "kwargs": {
-        "column": "max_glu_serum",
-        "type_": "float"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_of_type",
-      "kwargs": {
-        "column": "a1cresult",
-        "type_": "float"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_of_type",
-      "kwargs": {
         "column": "change",
         "type_": "float"
       },

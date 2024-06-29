@@ -69,7 +69,7 @@ stateful_data_pre_validation:
 # After Data Validation
 # *********************
 
-stateful_data_pre_validation:
+stateful:
   type: pandas.CSVDataset
   filepath: "data/prod/05_stateful/stateful_data.csv"
 
@@ -77,10 +77,6 @@ stateful_data_pre_validation:
 # *********************
 # Feature Pruning
 # *********************
-
-selected_features:
-  type: pickle.PickleDataset
-  filepath: "data/dev/07_model_input/selected_features.pkl"  # from dev
 
 pruned_data:
   type: pandas.CSVDataset
