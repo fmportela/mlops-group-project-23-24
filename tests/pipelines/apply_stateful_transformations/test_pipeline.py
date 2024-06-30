@@ -5,6 +5,7 @@ import pytest
 import os
 from sklearn.impute import SimpleImputer
 
+
 def test_apply_transformations():
     # Load the data
     filepath = os.path.join("tests/sample/sample_X_train_stateless.csv")

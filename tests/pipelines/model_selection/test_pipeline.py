@@ -13,13 +13,12 @@ import mlflow
 
 @pytest.fixture(scope="function")
 def mlflow_setup():
-    # diretorios temp, para testar o selection model,
-    # e não estragar o ambiente original
+    # temporary directories for mlflow.
+    # this way the original doesnt get messed up
     temp_dir = tempfile.mkdtemp()
     artifact_dir = tempfile.mkdtemp()
 
-    # novos caminhos temporários para o mlflow 
-    # dar track e não guardar no ambiente original
+
     mlflow.set_tracking_uri(f"file://{temp_dir}")
     mlflow.set_artifact_uri(f"file://{artifact_dir}")
 

@@ -1,7 +1,5 @@
 import pytest
 from sklearn.impute import SimpleImputer
-
-# from kedro.framework.context import KedroContext
 from src.mlops_group_project.pipelines.stateful_cleaning.nodes import impute_missing_values
 import os
 import pandas as pd

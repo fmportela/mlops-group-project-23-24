@@ -4,6 +4,7 @@ import numpy as np
 import os
 from src.mlops_group_project.pipelines.concatenate_data.nodes import concatenate_data
 
+
 def test_concatenate_data():
     X_train_statefull_path = os.path.join("tests/sample/sample_data_X_train_statefull.csv")
     X_val_statefull_path = os.path.join("tests/sample/sample_data_X_val_statefull.csv")

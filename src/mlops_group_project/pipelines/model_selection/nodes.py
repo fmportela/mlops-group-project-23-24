@@ -238,8 +238,8 @@ def select_model(
                 mlflow.log_metric("overfitting", overfitting)
                 
                 # Compute and log normalized confusion matrix
-                cm = confusion_matrix(y_test, test_pred, normalize='true')
                 plt.figure(figsize=(10,7))
+                cm = confusion_matrix(y_test, test_pred, normalize='true')
                 sns.heatmap(cm, annot=True, fmt='.2f', cmap='Blues')
                 plt.xlabel('Predicted')
                 plt.ylabel('True')

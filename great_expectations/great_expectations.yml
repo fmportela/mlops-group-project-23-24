@@ -62,30 +62,6 @@ datasources:
             class_name: Asset
         class_name: RuntimeDataConnector
     class_name: Datasource
-  dev_processed_datasource:
-    execution_engine:
-      module_name: great_expectations.execution_engine
-      class_name: PandasExecutionEngine
-    module_name: great_expectations.datasource
-    data_connectors:
-      default_inferred_data_connector_name:
-        default_regex:
-          group_names:
-            - data_asset_name
-          pattern: (.*)
-        base_directory: ../data/dev/06_stateful
-        module_name: great_expectations.datasource.data_connector
-        class_name: InferredAssetFilesystemDataConnector
-      default_runtime_data_connector_name:
-        module_name: great_expectations.datasource.data_connector
-        assets:
-          my_runtime_asset_name:
-            module_name: great_expectations.datasource.data_connector.asset
-            batch_identifiers:
-              - runtime_batch_identifier_name
-            class_name: Asset
-        class_name: RuntimeDataConnector
-    class_name: Datasource
   prod_processed_datasource:
     execution_engine:
       module_name: great_expectations.execution_engine
