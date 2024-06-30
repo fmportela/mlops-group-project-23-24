@@ -224,8 +224,6 @@ def select_model(
                     best_score = test_report["1"]["f1-score"]
                     best_run_id = run.info.run_id
                     best_model_name = model_name
-                
-                # mlflow.sklearn.log_model(model, model_name)
                     
                 mlflow.log_metric("training_precision_1", train_report["1"]["precision"])
                 mlflow.log_metric("training_recall_1", train_report["1"]["recall"])

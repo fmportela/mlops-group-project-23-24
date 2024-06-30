@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1719772202278
+current_stage: None
+description: ''
+last_updated_timestamp: 1719772202278
+name: RandomForestClassifier
+run_id: 4a004df077e2426c88bdeaee60056414
+run_link: ''
+source: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/4a004df077e2426c88bdeaee60056414/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/4a004df077e2426c88bdeaee60056414/artifacts/model
+user_id: null
+version: 2

@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/d45a0b1a25e347b98e39173f7931fe65/artifacts
+deleted_time: 1719771112586
+end_time: null
+entry_point_name: ''
+experiment_id: '591707882377658591'
+lifecycle_stage: deleted
+run_id: d45a0b1a25e347b98e39173f7931fe65
+run_name: RandomForestClassifier
+run_uuid: d45a0b1a25e347b98e39173f7931fe65
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719770773167
+status: 1
+tags: []
+user_id: fmppo

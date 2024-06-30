@@ -112,7 +112,7 @@ n_features: None
 # Model Selection
 # *****************************
 
-n_trials: 1
+n_trials: 5
 
 
 # *****************************
