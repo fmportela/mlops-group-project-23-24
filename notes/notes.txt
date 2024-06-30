@@ -1,5 +1,0 @@
-> using prod and dev envs
-> champion model is the prod model and promising models are called challengers. there can only be 1 champion but there can be several challengers
-> the original dataset from kaggle has been minimally handled for symplicity's sake: removed meds columns and make target binary instead of ternary
-> the reference dataset is a copy of the clean data (after stateless transformations, feat. eng. and stateful transformations)
-> best model is the best model of the run (in dev) even if it does not beat the champion model metrics.
