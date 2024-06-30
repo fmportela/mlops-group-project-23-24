@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 # NOTE: to avoid changing the champion model randomly during dev runs (champion model is our prod model)
-# our approach is to store promosiing models as "challengers". Which after further testing (e.g. shadow testing)
+# our approach is to store promising models as "challengers". Which after further testing (e.g. shadow testing)
 # can indeed be manually promoted to champion. This is a common practice in ML engineering.
 
 MODELS_DICT = {

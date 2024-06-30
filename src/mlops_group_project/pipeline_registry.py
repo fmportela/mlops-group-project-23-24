@@ -52,7 +52,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_unit_tests_after_processing_pipeline = data_unit_tests_after_processing.create_pipeline()
     model_inference_pipeline = model_inference.create_pipeline()
     feature_pruning_pipeline = feature_pruning.create_pipeline()
-    model_inference_pipeline = model_inference.create_pipeline()
+    model_inference_pipeline = model_inference.create_pipeline()  # Duas vezes model inference???? -- Andre 30/06 01:18h
     
     return {
         # individual pipelines for debugging
