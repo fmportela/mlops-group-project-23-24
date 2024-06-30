@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'concatenate_data'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 import pandas as pd
 import pytest
 import numpy as np
@@ -45,11 +36,11 @@ def test_concatenate_data():
     # was not done correctly
     assert all_data_together.isnull().sum().sum() == 0
 
-    collumns_on_data = set(X_train_statefull.columns.tolist() + y_train.columns.tolist() +\
+    columns_on_data = set(X_train_statefull.columns.tolist() + y_train.columns.tolist() +\
                         X_val_statefull.columns.tolist() + y_val.columns.tolist() +\
                         X_test_statefull.columns.tolist() + y_test.columns.tolist())
 
 
 
-    assert set(all_data_together.columns) == collumns_on_data
+    assert set(all_data_together.columns) == columns_on_data
 

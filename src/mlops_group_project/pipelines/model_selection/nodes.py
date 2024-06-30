@@ -4,13 +4,21 @@ import warnings; warnings.filterwarnings('ignore')
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, f1_score
+from sklearn.metrics import (
+    classification_report,
+    f1_score,
+    confusion_matrix,
+    roc_curve,
+    auc)
 from sklearn.base import BaseEstimator
 
 import optuna
+
 import mlflow
 from mlflow.tracking import MlflowClient
 
@@ -173,7 +181,12 @@ def select_model(
     best_run_id = None
     best_model_name = None
     
-    mlflow.autolog(log_model_signatures=True, log_input_examples=True)
+    mlflow.autolog(
+        log_model_signatures=True,
+        log_input_examples=True,
+        silent=True
+        )
+    
     with mlflow.start_run(run_name="model_selection_run", nested=True):
         for model_name, model_info in models.items():
             with mlflow.start_run(run_name=model_name, nested=True) as run:
@@ -198,6 +211,7 @@ def select_model(
                 model.fit(X_combined, np.ravel(y_combined))
                 train_pred = model.predict(X_combined)
                 test_pred = model.predict(X_test)
+                test_pred_proba = model.predict_proba(X_test)
                 
                 train_report = classification_report(np.ravel(y_combined), train_pred, output_dict=True)
                 test_report = classification_report(np.ravel(y_test), test_pred, output_dict=True)
@@ -210,9 +224,9 @@ def select_model(
                     best_score = test_report["1"]["f1-score"]
                     best_run_id = run.info.run_id
                     best_model_name = model_name
-
-                # NOTE: not all items are logged, so we are adding more
-                # metrics logging (train and test)
+                
+                # mlflow.sklearn.log_model(model, model_name)
+                    
                 mlflow.log_metric("training_precision_1", train_report["1"]["precision"])
                 mlflow.log_metric("training_recall_1", train_report["1"]["recall"])
                 mlflow.log_metric("training_f1_score_1", train_report["1"]["f1-score"])
@@ -222,6 +236,30 @@ def select_model(
                 mlflow.log_metric("testing_recall_1", test_report["1"]["recall"])
                 mlflow.log_metric("testing_f1_score_1", test_report["1"]["f1-score"])
                 mlflow.log_metric("testing_accuracy", test_report["accuracy"])
+                
+                mlflow.log_metric("overfitting", overfitting)
+                
+                # Compute and log normalized confusion matrix
+                cm = confusion_matrix(y_test, test_pred, normalize='true')
+                plt.figure(figsize=(10,7))
+                sns.heatmap(cm, annot=True, fmt='.2f', cmap='Blues')
+                plt.xlabel('Predicted')
+                plt.ylabel('True')
+                plt.title('Normalized Confusion Matrix')
+                mlflow.log_figure(plt.gcf(), "normalized_confusion_matrix.png")
+                plt.close()
+                
+                # roc curve
+                plt.figure()
+                fpr, tpr, _ = roc_curve(y_test, test_pred_proba[:, 1])
+                roc_auc = auc(fpr, tpr)
+                plt.plot(fpr, tpr, label=f"ROC curve (area = {roc_auc:.2f})")
+                plt.xlabel('False Positive Rate')
+                plt.ylabel('True Positive Rate')
+                plt.title('ROC Curve (Positive Class)')
+                plt.legend(loc='lower right')
+                mlflow.log_figure(plt.gcf(), "roc_curve_positive_class.png")
+                plt.close()
                 
                 log.info(f"Model: {model_name}")
                 log.info(f"Training F1-score: {train_report['1']['f1-score']}")
@@ -241,9 +279,12 @@ def select_model(
                 champion_model_score = champion_model_metrics['testing_f1_score_1']
                 print(f"Champion model F1-score: {champion_model_score}")
                 
-                if best_score >= champion_model_score:
+                # a promising model, i.e. challenger, is a model whose score is within 0.1 of the
+                # champion model (better or worse, we allow this flexibility since the models
+                # were tested in possibly different datasets so their scores are not directly comparable)                
+                if best_score >= (champion_model_score - 0.1):
                     
-                    log.info("Challenger model is better than champion model.")
+                    log.info("Challenger model might be better than champion model.")
                     
                     # register the best model as the a promising challenger
                     register_model(
@@ -254,6 +295,9 @@ def select_model(
             else:
                 # if there is no champion model we register the best model as the champion
                 # (this will only be triggered in the 1st run ever - long before an actual model is put into production)
+                
+                log.info("No champion model found. Registering best model as champion.")
+                
                 register_model(
                     f"runs:/{best_run_id}/model",
                     best_model_name,

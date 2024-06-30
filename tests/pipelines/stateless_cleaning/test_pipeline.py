@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'data_unit_tests_after_cleaning'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 import pytest
 from src.mlops_group_project.pipelines.stateless_cleaning.nodes import replace_pseudo_nulls, drop_unwanted_columns, encode_gender, encode_age_bracket, encode_race, encode_diabetes_columns, clean_df, encode_payer_code
 import os

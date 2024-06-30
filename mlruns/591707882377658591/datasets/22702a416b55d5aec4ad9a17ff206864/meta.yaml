@@ -1,0 +1,14 @@
+digest: 521553f4
+name: dataset
+profile: '{"num_rows": 61058, "num_elements": 610580}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "race", "required": true},
+  {"type": "double", "name": "gender", "required": true}, {"type": "double", "name":
+  "age", "required": true}, {"type": "double", "name": "discharge_disposition_id",
+  "required": true}, {"type": "double", "name": "time_in_hospital", "required": true},
+  {"type": "double", "name": "payer_code", "required": true}, {"type": "double", "name":
+  "num_medications", "required": true}, {"type": "double", "name": "change", "required":
+  true}, {"type": "double", "name": "total_visits_in_previous_year", "required": true},
+  {"type": "double", "name": "comorbidity_index", "required": true}]}'
+source: '{"tags": {"mlflow.user": "fmppo", "mlflow.source.name": "c:\\Users\\fmppo\\Desktop\\MSDSAA\\Y1\\S2\\MLOps\\mlops-group-project\\env\\Scripts\\kedro",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'model_selection'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 import numpy as np
 import pandas as pd
 import pytest
@@ -38,9 +29,6 @@ def mlflow_setup():
     shutil.rmtree(artifact_dir)
 
 
-
-
-
 def test_model_selection():
     train_sample_filepath = os.path.join("tests\sample\sample_data_model_selection_train.csv")
     val_sample_filepath = os.path.join("tests\sample\sample_data_model_selection_val.csv")
@@ -50,7 +38,6 @@ def test_model_selection():
     y_sample_val_filepath = os.path.join("tests\sample\sample_y_val.csv")
     y_sample_test_filepath = os.path.join("tests\sample\sample_y_test.csv")
 
-
     # dfs
     train_sample = pd.read_csv(train_sample_filepath)
     val_sample = pd.read_csv(val_sample_filepath)
@@ -59,7 +46,6 @@ def test_model_selection():
     y_sample_train = pd.read_csv(y_sample_train_filepath)
     y_sample_val = pd.read_csv(y_sample_val_filepath)
     y_sample_test = pd.read_csv(y_sample_test_filepath)
-
 
     best_model = select_model(
         X_train=train_sample,
@@ -71,4 +57,3 @@ def test_model_selection():
         n_trials=1,
     )
     assert isinstance(best_model, BaseEstimator)
-

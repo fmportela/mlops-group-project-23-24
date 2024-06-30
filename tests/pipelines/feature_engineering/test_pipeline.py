@@ -5,7 +5,6 @@ import os
 from src.mlops_group_project.pipelines.feature_engineering.nodes import total_visits_in_previous_year, add_features,comorbidity_index
 
 
-
 def test_comorbidity_index():
     filepath = os.path.join("tests/sample/sample_data_staless_try_commorbity.csv")
     df_sample = pd.read_csv(filepath)

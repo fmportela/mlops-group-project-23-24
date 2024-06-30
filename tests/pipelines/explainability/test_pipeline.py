@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'explainability'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 from src.mlops_group_project.pipelines.explainability.nodes import calculate_permutation_importance
 from sklearn.linear_model import LogisticRegression
 import pandas as pd
@@ -43,7 +34,6 @@ def test_calculate_permutation_importance():
     y_sample_train_filepath = os.path.join("tests\sample\sample_y_train.csv")
     y_sample_val_filepath = os.path.join("tests\sample\sample_y_val.csv")
     y_sample_test_filepath = os.path.join("tests\sample\sample_y_test.csv")
-
 
     # dfs
     train_sample = pd.read_csv(train_sample_filepath)

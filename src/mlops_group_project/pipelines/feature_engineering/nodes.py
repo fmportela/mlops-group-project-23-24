@@ -123,15 +123,18 @@ def comorbidity_index(df):
     
     return df
 
-
-
-
-
-
-
-
-
-
+def calculate_complexity_score(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculates the complexity score of the patient.
+    
+    Args:
+        df: pd.DataFrame: Dataframe to calculate the feature for.
+    
+    Returns:
+        pd.DataFrame: Dataframe with the new feature.
+    """
+    df['complexity_score'] = df['num_medications'] + df['num_lab_procedures'] + df['number_diagnoses']
+    return df
 
 
 def add_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -148,7 +151,7 @@ def add_features(df: pd.DataFrame) -> pd.DataFrame:
     fe_functions = [
         total_visits_in_previous_year,
         comorbidity_index,
-        # calculate_complexity_score,
+        calculate_complexity_score,
     ]
 
     for func in fe_functions:
