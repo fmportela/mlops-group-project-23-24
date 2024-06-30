@@ -54,7 +54,8 @@ def test_calculate_permutation_importance():
     y_sample_val = pd.read_csv(y_sample_val_filepath)
     y_sample_test = pd.read_csv(y_sample_test_filepath)
 
-
+    # it has to be fitted before being passed to the function
+    # this would already be done in the pipeline
     model_a = LogisticRegression()
     model_a.fit(train_sample, y_sample_train)
 
