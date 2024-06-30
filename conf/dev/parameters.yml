@@ -112,7 +112,7 @@ n_features: None
 # Model Selection
 # *****************************
 
-n_trials: 10
+n_trials: 1
 
 
 # *****************************
@@ -126,4 +126,3 @@ n_trials: 10
 
 # adding here because Kedro does not support "html" datasets
 data_drift_output_path: "data/dev/09_reporting/data_drift_analysis.html"
-

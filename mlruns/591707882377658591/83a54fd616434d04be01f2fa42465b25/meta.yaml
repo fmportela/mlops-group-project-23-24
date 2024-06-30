@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/83a54fd616434d04be01f2fa42465b25/artifacts
+end_time: 1719770246884
+entry_point_name: ''
+experiment_id: '591707882377658591'
+lifecycle_stage: active
+run_id: 83a54fd616434d04be01f2fa42465b25
+run_name: data_drift_report
+run_uuid: 83a54fd616434d04be01f2fa42465b25
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719770246548
+status: 3
+tags: []
+user_id: fmppo

@@ -54,14 +54,9 @@ def locate_champion_model() -> Union[BaseEstimator, None]:
     models = client.search_registered_models()
     for model in models:        
         for alias in model.aliases.keys():
-            print(alias)
-            if alias == "champion":
-                
-                print(model.aliases)
-                print(model.latest_versions)
-                
-                version = int(model.aliases[alias])
-                run_id = client.get_model_version(name=model.name, version=3).run_id
+            if alias == "champion":                
+                version = int(model.aliases["champion"])
+                run_id = client.get_model_version(name=model.name, version=version).run_id                
                 model_uri = f"runs:/{run_id}/model"
                 loaded_model = mlflow.pyfunc.load_model(model_uri)
                 return loaded_model

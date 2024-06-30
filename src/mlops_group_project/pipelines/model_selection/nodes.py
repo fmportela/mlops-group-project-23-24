@@ -181,6 +181,12 @@ def select_model(
     best_run_id = None
     best_model_name = None
     
+    mlflow.autolog(
+        log_model_signatures=True,
+        log_input_examples=True,
+        silent=True
+        )
+    
     with mlflow.start_run(run_name="model_selection_run", nested=True):
         for model_name, model_info in models.items():
             with mlflow.start_run(run_name=model_name, nested=True) as run:
@@ -219,7 +225,7 @@ def select_model(
                     best_run_id = run.info.run_id
                     best_model_name = model_name
                 
-                mlflow.sklearn.log_model(model, model_name)
+                # mlflow.sklearn.log_model(model, model_name)
                     
                 mlflow.log_metric("training_precision_1", train_report["1"]["precision"])
                 mlflow.log_metric("training_recall_1", train_report["1"]["recall"])
@@ -289,6 +295,9 @@ def select_model(
             else:
                 # if there is no champion model we register the best model as the champion
                 # (this will only be triggered in the 1st run ever - long before an actual model is put into production)
+                
+                log.info("No champion model found. Registering best model as champion.")
+                
                 register_model(
                     f"runs:/{best_run_id}/model",
                     best_model_name,
