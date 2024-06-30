@@ -173,7 +173,6 @@ def select_model(
     best_run_id = None
     best_model_name = None
     
-    mlflow.autolog(log_model_signatures=True, log_input_examples=True)
     with mlflow.start_run(run_name="model_selection_run", nested=True):
         for model_name, model_info in models.items():
             with mlflow.start_run(run_name=model_name, nested=True) as run:
@@ -211,8 +210,9 @@ def select_model(
                     best_run_id = run.info.run_id
                     best_model_name = model_name
 
-                # NOTE: not all items are logged, so we are adding more
-                # metrics logging (train and test)
+                
+                mlflow.sklearn.log_model(model, model_name)
+                
                 mlflow.log_metric("training_precision_1", train_report["1"]["precision"])
                 mlflow.log_metric("training_recall_1", train_report["1"]["recall"])
                 mlflow.log_metric("training_f1_score_1", train_report["1"]["f1-score"])
@@ -222,6 +222,8 @@ def select_model(
                 mlflow.log_metric("testing_recall_1", test_report["1"]["recall"])
                 mlflow.log_metric("testing_f1_score_1", test_report["1"]["f1-score"])
                 mlflow.log_metric("testing_accuracy", test_report["accuracy"])
+                
+                mlflow.log_metric("overfitting", overfitting)
                 
                 log.info(f"Model: {model_name}")
                 log.info(f"Training F1-score: {train_report['1']['f1-score']}")
@@ -241,9 +243,15 @@ def select_model(
                 champion_model_score = champion_model_metrics['testing_f1_score_1']
                 print(f"Champion model F1-score: {champion_model_score}")
                 
-                if best_score >= champion_model_score:
+                # a promising model, i.e. challenger, is a model whose score is within 0.1 of the
+                # champion model (better or worse, we allow this flexibility since the models
+                # were tested in possibly different datasets so their scores are not directly comparable)
+                score_diff = abs(best_score - champion_model_score)
+                log.info(f"Score difference: {score_diff}")
+                
+                if score_diff < 0.1:
                     
-                    log.info("Challenger model is better than champion model.")
+                    log.info("Challenger model is might be better than champion model.")
                     
                     # register the best model as the a promising challenger
                     register_model(
