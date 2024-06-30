@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'feature_selection'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 from src.mlops_group_project.pipelines.feature_selection.nodes import select_features, filter_dataset
 import pandas as pd
 import numpy as np
@@ -18,24 +9,18 @@ def test_feature_selection():
     path_to_label = os.path.join("tests/sample/sample_y_train.csv") 
     path_to_features = os.path.join("tests/sample/sample_data_statefull_X_train.csv")
     
-    
     X_train = pd.read_csv(path_to_features)
     y_train = pd.read_csv(path_to_label)
-    
-    
     
     # 5 random features from the dataset
     col_names = X_train.columns
     # pick 5 random features
     random_features = np.random.choice(col_names, 5, replace=False).tolist()
     
-    
     list_of_feature_selection_methods = ["rfe", "tree", "all", "manual",random_features, 5]
-    
     
     params = {"random_state": 42}
     n_features = 5
-    
     
     for technique in list_of_feature_selection_methods:
         if technique == "rfe":

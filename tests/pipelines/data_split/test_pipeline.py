@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'data_split'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 import pandas as pd
 import numpy as np
 import os
@@ -48,9 +39,6 @@ def test_split_data():
     test_size = X_test.shape[0]
     expected_test_size = int(data.shape[0] * set_sizes[2])
     assert abs(test_size / expected_test_size - 1) <= tolerance, f"The X_test does not have approximately 15% of the data. Expected {expected_test_size}, got {test_size}."
-
-
-
 
     # check if the data was stratified
     proportions_target_train = y_train.value_counts(normalize=True)

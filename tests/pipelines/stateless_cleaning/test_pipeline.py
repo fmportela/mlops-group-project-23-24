@@ -1,12 +1,3 @@
-"""
-This is a boilerplate test file for pipeline 'data_unit_tests_after_cleaning'
-generated using Kedro 0.19.4.
-Please add your pipeline tests here.
-
-Kedro recommends using `pytest` framework, more info about it can be found
-in the official documentation:
-https://docs.pytest.org/en/latest/getting-started.html
-"""
 import pytest
 # from kedro.framework.context import KedroContext
 from src.mlops_group_project.pipelines.stateless_cleaning.nodes import replace_pseudo_nulls, drop_unwanted_columns, encode_gender, encode_age_bracket, encode_race, encode_diabetes_columns, clean_df, encode_payer_code
@@ -14,10 +5,6 @@ import os
 import pandas as pd
 import numpy as np
 import math
-
-
-
-
 
 
 def test_replace_pseudo_nulls():
@@ -37,7 +24,6 @@ def test_encode_gender():
 
     result = encode_gender(df_sample)
     assert set(result.gender.unique().tolist()) == {0, 1}
-
 
 
 def test_encode_age_bracket():
@@ -164,7 +150,3 @@ def test_clean_df():
     for col in cols:
         assert data[col].dtype in [np.int64, np.int32, np.object_,np.float64, np.float32, np.bool_]
 
-
-
-# if __name__ == '__main__':
-#     test_encode_gender()

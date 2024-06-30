@@ -42,7 +42,7 @@ def load_registered_model_version(model_name: str, version: int = -1) -> Union[B
         raise Exception(f"Could not load model from Registry: {e}")
     
     
-def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]:
+def locate_champion_model() -> Union[BaseEstimator, None]:
     """
     Locate the champion model in the MLflow Model Registry.
     
@@ -52,11 +52,19 @@ def locate_champion_model(alias: str = "champion") -> Union[BaseEstimator, None]
     client = MlflowClient()
     
     models = client.search_registered_models()
-    for model in models:
+    for model in models:        
         for alias in model.aliases.keys():
+            print(alias)
             if alias == "champion":
-                version = model.aliases[alias]
-                return load_registered_model_version(model.name, version)
+                
+                print(model.aliases)
+                print(model.latest_versions)
+                
+                version = int(model.aliases[alias])
+                run_id = client.get_model_version(name=model.name, version=3).run_id
+                model_uri = f"runs:/{run_id}/model"
+                loaded_model = mlflow.pyfunc.load_model(model_uri)
+                return loaded_model
     
     return None
 
@@ -84,3 +92,7 @@ def make_predictions(X: pd.DataFrame, ids: pd.DataFrame) -> pd.DataFrame:
     log.info(f"Number of positive predictions: {predictions_df['prediction'].sum()}")
     
     return predictions_df
+
+
+if __name__ == '__main__':
+    locate_champion_model()

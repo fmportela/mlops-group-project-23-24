@@ -202,8 +202,6 @@ def select_model(
                 else:
                     model = model_info['model']
                 
-                mlflow.autolog()
-                
                 model.fit(X_combined, np.ravel(y_combined))
                 train_pred = model.predict(X_combined)
                 test_pred = model.predict(X_test)
@@ -220,6 +218,8 @@ def select_model(
                     best_score = test_report["1"]["f1-score"]
                     best_run_id = run.info.run_id
                     best_model_name = model_name
+                
+                mlflow.sklearn.log_model(model, model_name)
                     
                 mlflow.log_metric("training_precision_1", train_report["1"]["precision"])
                 mlflow.log_metric("training_recall_1", train_report["1"]["recall"])
@@ -275,11 +275,8 @@ def select_model(
                 
                 # a promising model, i.e. challenger, is a model whose score is within 0.1 of the
                 # champion model (better or worse, we allow this flexibility since the models
-                # were tested in possibly different datasets so their scores are not directly comparable)
-                score_diff = abs(best_score - champion_model_score)
-                log.info(f"Score difference: {score_diff}")
-                
-                if score_diff < 0.1:
+                # were tested in possibly different datasets so their scores are not directly comparable)                
+                if best_score >= (champion_model_score - 0.1):
                     
                     log.info("Challenger model might be better than champion model.")
                     
