@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/d5415ed59536468db18d817efd0f803a/artifacts
+end_time: 1719772227843
+entry_point_name: ''
+experiment_id: '591707882377658591'
+lifecycle_stage: active
+run_id: d5415ed59536468db18d817efd0f803a
+run_name: permutation_importance
+run_uuid: d5415ed59536468db18d817efd0f803a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719772207347
+status: 3
+tags: []
+user_id: fmppo

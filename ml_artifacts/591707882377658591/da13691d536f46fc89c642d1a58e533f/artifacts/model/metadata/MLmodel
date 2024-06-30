@@ -1,0 +1,35 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.14
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.4.2
+mlflow_version: 2.11.3
+model_size_bytes: 119835
+model_uuid: 3e323eb0136b4a12b26bf47873aee265
+run_id: da13691d536f46fc89c642d1a58e533f
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "race", "required": true}, {"type": "double",
+    "name": "gender", "required": true}, {"type": "double", "name": "age", "required":
+    true}, {"type": "double", "name": "discharge_disposition_id", "required": true},
+    {"type": "double", "name": "time_in_hospital", "required": true}, {"type": "double",
+    "name": "payer_code", "required": true}, {"type": "double", "name": "num_medications",
+    "required": true}, {"type": "double", "name": "change", "required": true}, {"type":
+    "double", "name": "total_visits_in_previous_year", "required": true}, {"type":
+    "double", "name": "comorbidity_index", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+utc_time_created: '2024-06-30 18:23:46.330684'

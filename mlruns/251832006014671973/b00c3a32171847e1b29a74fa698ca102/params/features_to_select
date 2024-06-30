@@ -1,0 +1,1 @@
+['race', 'gender', 'age', 'discharge_disposition_id', 'time_in_hospital', 'payer_code', 'num_medications', 'change', 'total_visits_in_previous_year', 'comorbidity_index']
