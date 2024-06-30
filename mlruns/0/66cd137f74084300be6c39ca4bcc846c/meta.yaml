@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/0/66cd137f74084300be6c39ca4bcc846c/artifacts
+end_time: 1719783452149
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 66cd137f74084300be6c39ca4bcc846c
+run_name: feature_selection
+run_uuid: 66cd137f74084300be6c39ca4bcc846c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719783452074
+status: 4
+tags: []
+user_id: joaop
