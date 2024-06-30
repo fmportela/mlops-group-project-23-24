@@ -26,7 +26,9 @@ def register_pipelines() -> Dict[str, Pipeline]:
     Typical flow:
     1. make sure there is data available in the feature store (i.e. run the data_upload pipeline)
     2. run either the dev or prod pipelines (some parts of prod are dev dependent)
-    
+    3. Be aware that if an "env" with the name "dev" or "prod" already exists, it will point to a
+    local directory on someone's PC, and you will get an error running the pipeline. To fix this, name the env something else.
+
     Commands.
     data_upload:
         dev version: `kedro run --pipeline data_upload --env=dev`
@@ -50,9 +52,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
     track_ids_pipeline = track_ids.create_pipeline()
     apply_stateful_transformations_pipeline = apply_stateful_transformations.create_pipeline()
     data_unit_tests_after_processing_pipeline = data_unit_tests_after_processing.create_pipeline()
-    model_inference_pipeline = model_inference.create_pipeline()
     feature_pruning_pipeline = feature_pruning.create_pipeline()
-    model_inference_pipeline = model_inference.create_pipeline()  # Duas vezes model inference???? -- Andre 30/06 01:18h
+    model_inference_pipeline = model_inference.create_pipeline()  
     
     return {
         # individual pipelines for debugging
