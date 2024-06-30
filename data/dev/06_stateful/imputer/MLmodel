@@ -5,6 +5,6 @@ flavors:
     serialization_format: cloudpickle
     sklearn_version: 1.4.2
 mlflow_version: 2.11.3
-model_size_bytes: 970
-model_uuid: f5c8c68e82394325be88f5dae18c4e30
-utc_time_created: '2024-06-29 01:02:54.126518'
+model_size_bytes: 997
+model_uuid: 9f5ac11767aa4cec876c13e7dc3ce123
+utc_time_created: '2024-06-30 13:14:51.234074'

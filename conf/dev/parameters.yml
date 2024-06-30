@@ -87,31 +87,38 @@ stratify: True
 # can be "rfe", "tree" or "all" or "manual"
 # if "manual" then specify the features in the list below
 # if "rfe" or "tree" then specify the model parameters below
+# and define the number of feature to select
 feature_selection: "manual"
 manual_features: ["race", "gender", "age", "discharge_disposition_id", "time_in_hospital", "payer_code", "num_medications", "change", "total_visits_in_previous_year", "comorbidity_index"]
-# for RFE
+
+# for RFE if selected
 # fs_model_params:
 #   random_state: 42
 
-# for Tree
-fs_model_params:
-  random_state: 42
+# for Tree if selected
+# fs_model_params:
+#   random_state: 42
 
-n_features: 10
+# if none is selected
+fs_model_params: None
+
+# if tree or rfe is selected
+# n_features: 10
+# else:
+n_features: None
 
 
 # *****************************
 # Model Selection
 # *****************************
 
-n_trials: 1 
+n_trials: 1
 
 
 # *****************************
 # Explainability
 # *****************************
 
-# todo...
 
 # *****************************
 # Data Drift
