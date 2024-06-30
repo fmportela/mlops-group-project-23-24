@@ -23,7 +23,6 @@ def test_feature_selection():
     y_train = pd.read_csv(path_to_label)
     
     
-    
     # 5 random features from the dataset
     col_names = X_train.columns
     # pick 5 random features

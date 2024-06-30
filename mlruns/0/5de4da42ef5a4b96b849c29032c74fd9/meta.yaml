@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/0/5de4da42ef5a4b96b849c29032c74fd9/artifacts
+end_time: 1719769354519
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5de4da42ef5a4b96b849c29032c74fd9
+run_name: permutation_importance
+run_uuid: 5de4da42ef5a4b96b849c29032c74fd9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719769354368
+status: 4
+tags: []
+user_id: joaop

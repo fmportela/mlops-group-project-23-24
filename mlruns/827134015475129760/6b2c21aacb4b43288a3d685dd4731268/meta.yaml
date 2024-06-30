@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/827134015475129760/6b2c21aacb4b43288a3d685dd4731268/artifacts
+end_time: 1719751611269
+entry_point_name: ''
+experiment_id: '827134015475129760'
+lifecycle_stage: active
+run_id: 6b2c21aacb4b43288a3d685dd4731268
+run_name: RandomForestClassifier
+run_uuid: 6b2c21aacb4b43288a3d685dd4731268
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719751592206
+status: 3
+tags: []
+user_id: joaop

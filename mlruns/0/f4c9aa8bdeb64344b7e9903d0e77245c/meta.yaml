@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/0/f4c9aa8bdeb64344b7e9903d0e77245c/artifacts
+end_time: 1719769610408
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f4c9aa8bdeb64344b7e9903d0e77245c
+run_name: GradientBoostingClassifier
+run_uuid: f4c9aa8bdeb64344b7e9903d0e77245c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719769598664
+status: 3
+tags: []
+user_id: joaop

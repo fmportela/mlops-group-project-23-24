@@ -12,6 +12,7 @@ import pandas as pd
 import pytest
 from src.mlops_group_project.pipelines.data_ingestion.nodes import load_data
 
+
 def test_load_data():
     group_name = "dev_raw_data"
     df = load_data(group_name)

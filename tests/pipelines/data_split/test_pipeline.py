@@ -13,9 +13,8 @@ import os
 from src.mlops_group_project.pipelines.data_split.nodes import split_data
 import pytest
 import math
-
-
 import math
+
 
 def test_split_data():
     raw_data = os.path.join("tests/sample/sample_raw_data.csv")
@@ -33,13 +32,13 @@ def test_split_data():
 
     X_train, X_val, X_test, y_train, y_val, y_test = split_data(df=data, target_label=target_label, set_sizes=set_sizes, stratify=True, random_state=random_state)
     
-    # Verificar se X_train tem aproximadamente 70% dos dados
+    # Verify if X_train contains 70% of data, aproximately
     train_size = X_train.shape[0]
     expected_train_size = int(data.shape[0] * set_sizes[0])
     tolerance = 0.01  # Definindo uma tolerância de 1%
     assert abs(train_size / expected_train_size - 1) <= tolerance, f"The X_train does not have approximately 70% of the data. Expected {expected_train_size}, got {train_size}."
     
-    # Similarmente para X_val e X_test
+    # Similar to X_val and X_test
     val_size = X_val.shape[0]
     expected_val_size = int(data.shape[0] * set_sizes[1])
     assert abs(val_size / expected_val_size - 1) <= tolerance, f"The X_val does not have approximately 15% of the data. Expected {expected_val_size}, got {val_size}."
@@ -48,9 +47,6 @@ def test_split_data():
     test_size = X_test.shape[0]
     expected_test_size = int(data.shape[0] * set_sizes[2])
     assert abs(test_size / expected_test_size - 1) <= tolerance, f"The X_test does not have approximately 15% of the data. Expected {expected_test_size}, got {test_size}."
-
-
-
 
     # check if the data was stratified
     proportions_target_train = y_train.value_counts(normalize=True)

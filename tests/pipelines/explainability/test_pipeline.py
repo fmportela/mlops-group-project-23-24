@@ -20,22 +20,19 @@ import mlflow
 
 @pytest.fixture(scope="function")
 def mlflow_setup():
-    # diretorios temp, para testar o selection model,
-    # e não estragar o ambiente original
+    # temporary directories for mlflow
+    # this way the original doesnt get messed up
     temp_dir = tempfile.mkdtemp()
     artifact_dir = tempfile.mkdtemp()
 
-    # novos caminhos temporários para o mlflow 
-    # dar track e não guardar no ambiente original
     mlflow.set_tracking_uri(f"file://{temp_dir}")
     mlflow.set_artifact_uri(f"file://{artifact_dir}")
 
-    yield  # Pausa a execução do fixture e passa o controle para o teste
+    yield  # Stops execution of fixture and gives control to the test
 
-    # Remove as pastas temporárias dps do teste correr
+    # Delete the temporary directories
     shutil.rmtree(temp_dir)
     shutil.rmtree(artifact_dir)
-
 
 
 def test_calculate_permutation_importance():
@@ -57,8 +54,12 @@ def test_calculate_permutation_importance():
     y_sample_val = pd.read_csv(y_sample_val_filepath)
     y_sample_test = pd.read_csv(y_sample_test_filepath)
 
+
+    model_a = LogisticRegression()
+    model_a.fit(train_sample, y_sample_train)
+
     explainanbility_df = calculate_permutation_importance(
-        LogisticRegression(),
+        model_a,
         train_sample,
         y_sample_train,
         n_repeats=5,

@@ -8,16 +8,11 @@ in the official documentation:
 https://docs.pytest.org/en/latest/getting-started.html
 """
 import pytest
-# from kedro.framework.context import KedroContext
 from src.mlops_group_project.pipelines.stateless_cleaning.nodes import replace_pseudo_nulls, drop_unwanted_columns, encode_gender, encode_age_bracket, encode_race, encode_diabetes_columns, clean_df, encode_payer_code
 import os
 import pandas as pd
 import numpy as np
 import math
-
-
-
-
 
 
 def test_replace_pseudo_nulls():
@@ -39,15 +34,12 @@ def test_encode_gender():
     assert set(result.gender.unique().tolist()) == {0, 1}
 
 
-
 def test_encode_age_bracket():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
     df_sample = pd.read_csv(filepath)
 
     result = encode_age_bracket(df_sample)
     assert set(result.age.unique().tolist()) == {5, 15, 25, 35, 45, 55, 65, 75, 85, 95}
-
-
 
 
 # def test_map_diagnosis_to_bin():
@@ -88,7 +80,6 @@ def test_encode_age_bracket():
 #     assert map_diagnosis_to_bin('850.0') == 48
 
 
-
 def test_drop_unwanted_columns():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
     df_sample = pd.read_csv(filepath)
@@ -123,7 +114,6 @@ def test_encode_diabetes_columns():
     assert set(result["change"].unique().tolist()) == {0, 1}
 
 
-
 def test_encode_payer_code():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
     df_sample = pd.read_csv(filepath)
@@ -131,7 +121,6 @@ def test_encode_payer_code():
     result = encode_payer_code(df_sample)
     print(set(result["payer_code"].unique().tolist()))
     assert set(result["payer_code"].unique().tolist()) in [{0}, {1}, {0, 1}]
-
 
 
 # def test_encode_test_results():
@@ -143,13 +132,13 @@ def test_encode_payer_code():
 #     assert set(result["max_glu_serum"].unique().tolist()) == {0, 1, 2, 3}
 
 
-
 # # def test_fix_readmitted():
 # #     filepath = os.path.join("tests/sample/target_sample_raw_data.csv")
 # #     df_sample = pd.read_csv(filepath)
 
 # #     result = fix_readmitted(df_sample)
 # #     assert set(result["readmitted"].unique().tolist()) == {0, 1}
+
 
 def test_clean_df():
     filepath = os.path.join("tests/sample/sample_raw_data.csv")
@@ -164,7 +153,3 @@ def test_clean_df():
     for col in cols:
         assert data[col].dtype in [np.int64, np.int32, np.object_,np.float64, np.float32, np.bool_]
 
-
-
-# if __name__ == '__main__':
-#     test_encode_gender()
