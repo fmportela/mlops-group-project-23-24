@@ -1,0 +1,13 @@
+-------------------------
+Random Forest Classifier
+
+Duration: 30.8S
+
+train f1 score: 0.65
+test f1 score: 0.60
+
+train accuracy: 0.65
+test accuracy: 0.63
+
+train_roc_auc: 0.71
+test_roc_auc: N/A
