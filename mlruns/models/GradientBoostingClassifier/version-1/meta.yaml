@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1719781899267
+current_stage: None
+description: ''
+last_updated_timestamp: 1719781899267
+name: GradientBoostingClassifier
+run_id: a098161564604378826e9a5db2c29ccb
+run_link: ''
+source: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/a098161564604378826e9a5db2c29ccb/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/fmppo/Desktop/MSDSAA/Y1/S2/MLOps/mlops-group-project/ml_artifacts/591707882377658591/a098161564604378826e9a5db2c29ccb/artifacts/model
+user_id: null
+version: 1

@@ -1,7 +1,7 @@
 aliases:
-  challenger: '2'
+  challenger: '3'
   champion: '1'
 creation_timestamp: 1719770464488
 description: ''
-last_updated_timestamp: 1719772202310
+last_updated_timestamp: 1719782201416
 name: RandomForestClassifier

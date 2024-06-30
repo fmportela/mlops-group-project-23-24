@@ -69,12 +69,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-<<<<<<< HEAD
-=======
-# C extensions
-*.so
-
->>>>>>> origin/main
 # Distribution / packaging
 .Python
 build/
