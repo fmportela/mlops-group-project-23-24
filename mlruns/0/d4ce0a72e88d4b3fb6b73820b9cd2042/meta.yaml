@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/0/d4ce0a72e88d4b3fb6b73820b9cd2042/artifacts
+end_time: 1719700091259
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: d4ce0a72e88d4b3fb6b73820b9cd2042
+run_name: missing_value_imputation
+run_uuid: d4ce0a72e88d4b3fb6b73820b9cd2042
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719700086952
+status: 3
+tags: []
+user_id: joaop

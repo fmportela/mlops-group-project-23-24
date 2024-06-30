@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 
 from sklearn.impute import SimpleImputer
-from sklearn.compose import ColumnTransformer
+# from sklearn.compose import ColumnTransformer
 
 import mlflow
 

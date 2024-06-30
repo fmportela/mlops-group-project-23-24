@@ -1,7 +1,7 @@
 import logging
 
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+
 
 # NOTE: since feat. eng. is done before imputation we ought to be able to handle NaNs
 
@@ -125,21 +125,6 @@ def comorbidity_index(df):
 
 
 
-def calculate_complexity_score(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Calculates the complexity score using the normalized features.
-
-    Args:
-        df: pd.DataFrame: Dataframe to calculate the feature for.
-
-    Returns:
-        pd.DataFrame: Dataframe with the new feature.
-    """
-    scaler = MinMaxScaler()
-    features_to_normalize = ['num_lab_procedures', 'number_diagnoses', 'num_medications']
-    df[features_to_normalize] = scaler.fit_transform(df[features_to_normalize])
-    df['Complexity_Score'] = df['num_lab_procedures'] + df['number_diagnoses'] + df['num_medications']
-    return df
 
 
 

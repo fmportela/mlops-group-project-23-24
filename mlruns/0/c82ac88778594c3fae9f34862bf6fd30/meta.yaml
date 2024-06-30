@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/0/c82ac88778594c3fae9f34862bf6fd30/artifacts
+end_time: 1719706068379
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c82ac88778594c3fae9f34862bf6fd30
+run_name: feature_selection
+run_uuid: c82ac88778594c3fae9f34862bf6fd30
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719706064593
+status: 3
+tags: []
+user_id: joaop

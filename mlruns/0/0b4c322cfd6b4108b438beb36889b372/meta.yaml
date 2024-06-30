@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/joaop/Desktop/PROJETO MLOPS 2/mlops-group-project-23-24/ml_artifacts/0/0b4c322cfd6b4108b438beb36889b372/artifacts
+end_time: 1719703206617
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0b4c322cfd6b4108b438beb36889b372
+run_name: LogisticRegression
+run_uuid: 0b4c322cfd6b4108b438beb36889b372
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1719703195240
+status: 3
+tags: []
+user_id: joaop
